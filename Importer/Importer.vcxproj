@@ -301,7 +301,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="3DMesh Helper.h" />
-    <ClInclude Include="Debugger.h" />
     <ClInclude Include="IUIElement2.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="MeshIO Utility.h" />

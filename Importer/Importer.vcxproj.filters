@@ -202,7 +202,6 @@
       <Filter>Timer</Filter>
     </ClInclude>
     <ClInclude Include="version_control.h" />
-    <ClInclude Include="Debugger.h" />
     <ClInclude Include="IUIElement2.h">
       <Filter>User Interface 2.0</Filter>
     </ClInclude>
