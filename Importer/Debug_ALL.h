@@ -156,7 +156,7 @@ static size_t FindCharacter(const char* buffer, char character)// This function 
     return 0;// NOT FOUND
 }
 
-static TEXTURE_RESOLUTION GetTextureIndexFromResolution(uint resolution)// This function needs to be moved out of here. Maybe create some kind of helper header or something like that.
+static TEXTURE_RESOLUTION GetTextureIndexFromResolution(uint resolution)// This function needs to be moved out of here. It needs to be where the textures are dealt with, such as the renderer-helper
 {
     TEXTURE_RESOLUTION SRV_INDEX = UNSUPPORTED;
     switch (resolution)
