@@ -48,7 +48,7 @@ typedef unsigned long ulong;
 
 // Template Functions
 
-template <typename T, typename Ty>
+template <typename T, typename Ty> // This function needs to be moved out of here. Maybe create some kind of helper header or something like that.
 inline T find_last(T& first, T& last, const Ty& value)
 {
     T found = last;
@@ -115,7 +115,7 @@ bool NEW_ARRAY(T*& t, int size)
     return true;
 }
 
-static char* OpenFile(const wchar_t* name, size_t& length, const wchar_t* flags)
+static char* OpenFile(const wchar_t* name, size_t& length, const wchar_t* flags)// This function needs to be moved out of here. Maybe create some kind of helper header or something like that.
 {
     length = 0;
     FILE* pfile = nullptr;
@@ -143,7 +143,7 @@ static char* OpenFile(const wchar_t* name, size_t& length, const wchar_t* flags)
     return buffer;
 }
 
-static size_t FindCharacter(const char* buffer, char character)
+static size_t FindCharacter(const char* buffer, char character)// This function needs to be moved out of here. Maybe create some kind of helper header or something like that.
 {
     size_t index = 1;
     while(buffer[index] != EOF)
@@ -156,7 +156,7 @@ static size_t FindCharacter(const char* buffer, char character)
     return 0;// NOT FOUND
 }
 
-static TEXTURE_RESOLUTION GetTextureIndexFromResolution(uint resolution)
+static TEXTURE_RESOLUTION GetTextureIndexFromResolution(uint resolution)// This function needs to be moved out of here. Maybe create some kind of helper header or something like that.
 {
     TEXTURE_RESOLUTION SRV_INDEX = UNSUPPORTED;
     switch (resolution)
@@ -177,7 +177,7 @@ static TEXTURE_RESOLUTION GetTextureIndexFromResolution(uint resolution)
     return SRV_INDEX;
 }
 
-static wstring GetFileFormat(const wstring& filename)
+static wstring GetFileFormat(const wstring& filename)// This function needs to be moved out of here. Maybe create some kind of helper header or something like that.
 {
     wstring name;
     name.reserve(5);
@@ -193,7 +193,7 @@ static wstring GetFileFormat(const wstring& filename)
     return name;
 }
 
-static wstring GetFileName(const wstring& fullfilename)
+static wstring GetFileName(const wstring& fullfilename)// This function needs to be moved out of here. Maybe create some kind of helper header or something like that.
 {
     wstring name;
     name.reserve(20);
@@ -212,7 +212,7 @@ static wstring GetFileName(const wstring& fullfilename)
     return name;
 }
 
-static wstring GetFileDirectory(const wstring& fullfilename)
+static wstring GetFileDirectory(const wstring& fullfilename)// This function needs to be moved out of here. Maybe create some kind of helper header or something like that.
 {
     wstring name;
     name.reserve(20);    
