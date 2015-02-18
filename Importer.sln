@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3DMive", "Importer\Importer.vcxproj", "{2EDAA5D5-2595-4EFA-A369-7C42577A8952}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ACC34E04-2996-4B76-B837-9488630BEB73} = {ACC34E04-2996-4B76-B837-9488630BEB73}
+		{E842AC80-31CB-45B1-BED0-2C36D3D8417A} = {E842AC80-31CB-45B1-BED0-2C36D3D8417A}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Updater", "Updater\Updater.vcxproj", "{ACC34E04-2996-4B76-B837-9488630BEB73}"
 EndProject
