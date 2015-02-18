@@ -39,7 +39,7 @@ static ID2D1BitmapBrush* CreateBitmapBrush(wchar_t* filename, IWICImagingFactory
     }
 
     // Create the bitmap
-    ID2D1Bitmap* bitmap = nullptr;
+    ID2D1Bitmap* bitmap = nullptr;// change this to use MS comptr class
     if(SUCCEEDED(hr))
     {
         hr = pDeviceContext->CreateBitmapFromWicBitmap(pConverter, &bitmap);
