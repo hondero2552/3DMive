@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="AppLayer">
+      <UniqueIdentifier>{1648a5ae-a2fa-4968-99d5-a67d9f03178e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View">
+      <UniqueIdentifier>{199eb532-9b82-4ff6-95a2-c12febcddc34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Renderer">
+      <UniqueIdentifier>{6ac0e6b6-2093-4619-9952-aed0eb837777}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Camera">
+      <UniqueIdentifier>{a7a512a2-6c84-4769-a858-b96ce9ab6f21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D Mesh">
+      <UniqueIdentifier>{cd2c3c5b-f188-418b-b173-0704aeb7a993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{3b9bdfde-e158-4f07-9002-7dc509ef3fa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Renderer\DirectX">
+      <UniqueIdentifier>{901e68ee-9f79-448e-865c-ad02c2fe7085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Renderer\DirectX\Shaders">
+      <UniqueIdentifier>{35cedd98-8b6a-4f45-a5bf-771700935eef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Renderer\DirectX\Shaders\Vertex Shaders">
+      <UniqueIdentifier>{1c932ed5-16d2-4a1a-a7ee-9ab8af4bb440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Renderer\DirectX\Shaders\Pixel Shaders">
+      <UniqueIdentifier>{fa4d258b-2f54-47ef-9818-5477cb2eb527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Renderer\DirectX\Shaders\Constant Buffers">
+      <UniqueIdentifier>{69013c56-6fa9-4f77-9375-185c79fee78c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exporters">
+      <UniqueIdentifier>{692772e8-97a0-4757-ac83-571b128aa5cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Exporters\HND">
+      <UniqueIdentifier>{9eb5d809-b59a-4ed8-ad56-0ee8bc49891f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Renderer\DirectX\Shaders\Pixel Shaders\POS_TEX_NORM">
+      <UniqueIdentifier>{1e9e6694-2c22-4245-970c-f2f83b416859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View\Renderer\DirectX\Shaders\Pixel Shaders\POS_TEX_NORM_TAN">
+      <UniqueIdentifier>{180b314f-56a5-4386-a7af-e404406df42d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="User Interface %28UI%29">
+      <UniqueIdentifier>{04f3e560-f2ff-454e-b7af-5f08dce2021f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="User Interface %28UI%29\UI Elements">
+      <UniqueIdentifier>{c5a3eccb-7ad5-42dc-899b-2b66d41ee74b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="User Interface %28UI%29\Screen">
+      <UniqueIdentifier>{9d016bdf-238a-44da-ac7b-dcee0dc70cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="User Interface %28UI%29\UI Elements\Round Button">
+      <UniqueIdentifier>{2bb026bd-0837-4bff-a23b-38de97706332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="User Interface %28UI%29\UI Elements\Scroll Bar">
+      <UniqueIdentifier>{7bb02209-180e-4877-9c62-1e9b837fb987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="User Interface %28UI%29\UI Elements\SquareButton">
+      <UniqueIdentifier>{5f6880b4-f159-449a-a47a-76ded9bc131c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3D Mesh\DxMesh">
+      <UniqueIdentifier>{091032be-db4f-4302-be6e-cdb3ecfc3b2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh_IO">
+      <UniqueIdentifier>{0fa9bfe7-ddc5-40d1-a7b8-799403a4ee24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh_IO\OBJ">
+      <UniqueIdentifier>{711eb448-90ff-44ca-aeba-132dbc24800e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh_IO\HND">
+      <UniqueIdentifier>{f9597cbb-9d27-4c84-b907-a4208a57be84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh_IO\FBX">
+      <UniqueIdentifier>{2074276c-4813-4ec4-ac19-8b999bbb7583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh_IO\Base Class">
+      <UniqueIdentifier>{f8e998de-cc93-48bb-9757-ea90bf7963bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{81a89d52-0ece-48f9-b0fc-69720313b01a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Updater">
+      <UniqueIdentifier>{b88c605b-ae73-4fdb-967a-fc433a1fbce2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="User Interface 2.0">
+      <UniqueIdentifier>{ccf9497f-130a-4427-b412-95d214115934}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Cam.h">
+      <Filter>View\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="WinApplayer.h">
+      <Filter>AppLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>3D Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="MathTypes.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="math_funcs.h">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugDX.h">
+      <Filter>View\Renderer\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="ExporterBase.h">
+      <Filter>Exporters</Filter>
+    </ClInclude>
+    <ClInclude Include="ExporterHnd.h">
+      <Filter>Exporters\HND</Filter>
+    </ClInclude>
+    <ClInclude Include="HndHeader.h" />
+    <ClInclude Include="Importer.h">
+      <Filter>Mesh_IO</Filter>
+    </ClInclude>
+    <ClInclude Include="common_data_attributes.h">
+      <Filter>Mesh_IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Light_sources.h" />
+    <ClInclude Include="Debug_ALL.h" />
+    <ClInclude Include="IView.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="RendererDX.h">
+      <Filter>View\Renderer\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="User Interface.h">
+      <Filter>User Interface %28UI%29</Filter>
+    </ClInclude>
+    <ClInclude Include="D2DHelper.h">
+      <Filter>User Interface %28UI%29</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement Types.h">
+      <Filter>User Interface %28UI%29\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>User Interface %28UI%29\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="IUIElement.h">
+      <Filter>User Interface %28UI%29\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="RoundButton.h">
+      <Filter>User Interface %28UI%29\UI Elements\Round Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadrant.h">
+      <Filter>User Interface %28UI%29\UI Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareButton.h">
+      <Filter>User Interface %28UI%29\UI Elements\SquareButton</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollBar.h">
+      <Filter>User Interface %28UI%29\UI Elements\Scroll Bar</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMesh Helper.h">
+      <Filter>3D Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Mesh_IO</Filter>
+    </ClInclude>
+    <ClInclude Include="DXMesh.h">
+      <Filter>3D Mesh\DxMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJExporter.h">
+      <Filter>Exporters</Filter>
+    </ClInclude>
+    <ClInclude Include="PerFaceMaterial.h">
+      <Filter>Mesh_IO</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshIO Utility.h">
+      <Filter>Mesh_IO</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJIO.h">
+      <Filter>Mesh_IO\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshIOBase.h">
+      <Filter>Mesh_IO\Base Class</Filter>
+    </ClInclude>
+    <ClInclude Include="timer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="version_control.h" />
+    <ClInclude Include="Debugger.h" />
+    <ClInclude Include="IUIElement2.h">
+      <Filter>User Interface 2.0</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp">
+      <Filter>View\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="WinAppLayer.cpp">
+      <Filter>AppLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>3D Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>View\Renderer\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="ExporterHnd.cpp">
+      <Filter>Exporters\HND</Filter>
+    </ClCompile>
+    <ClCompile Include="Importer.cpp">
+      <Filter>Mesh_IO</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>User Interface %28UI%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>User Interface %28UI%29\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElementBase.cpp">
+      <Filter>User Interface %28UI%29\UI Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="RoundButton.cpp">
+      <Filter>User Interface %28UI%29\UI Elements\Round Button</Filter>
+    </ClCompile>
+    <ClCompile Include="SquareButton.cpp">
+      <Filter>User Interface %28UI%29\UI Elements\SquareButton</Filter>
+    </ClCompile>
+    <ClCompile Include="ScrollBar.cpp">
+      <Filter>User Interface %28UI%29\UI Elements\Scroll Bar</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Mesh_IO</Filter>
+    </ClCompile>
+    <ClCompile Include="DxMesh.cpp">
+      <Filter>3D Mesh\DxMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="PerFacesMaterial.cpp">
+      <Filter>Mesh_IO</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJIO.cpp">
+      <Filter>Mesh_IO\OBJ</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshIOBase.cpp">
+      <Filter>Mesh_IO\Base Class</Filter>
+    </ClCompile>
+    <ClCompile Include="timer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shaders\VS_PT.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Vertex Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VS_PTNB.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Vertex Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PS_PTN512.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Pixel Shaders\POS_TEX_NORM</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PS_PTN1024.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Pixel Shaders\POS_TEX_NORM</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PS_PTN2048.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Pixel Shaders\POS_TEX_NORM</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PS_PTN256.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Pixel Shaders\POS_TEX_NORM</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PS_PTNB256.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Pixel Shaders\POS_TEX_NORM_TAN</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PS_PTNB512.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Pixel Shaders\POS_TEX_NORM_TAN</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PS_PTNB1024.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Pixel Shaders\POS_TEX_NORM_TAN</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PS_PTNB2048.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Pixel Shaders\POS_TEX_NORM_TAN</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VS_PTN.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Vertex Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\VS_PN.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Vertex Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PS_PN.hlsl" />
+    <FxCompile Include="Shaders\VS_FacesNormal.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Vertex Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Shaders\PS_FacesNormal.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Pixel Shaders</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\ConstBuffer.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders\Constant Buffers</Filter>
+    </None>
+    <None Include="Shaders\LightSources.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders</Filter>
+    </None>
+    <None Include="Shaders\Textures.hlsl">
+      <Filter>View\Renderer\DirectX\Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
