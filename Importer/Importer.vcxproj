@@ -123,8 +123,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Projects\DirectXTex\DirectXTex;E:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Projects\DirectXTex\DirectXTex\Bin\Desktop_2012\Win32\Debug;E:\Projects\DirectXTK\Bin\Desktop_2012\Win32\Debug;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x86\debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Projects\DirectXTex;E:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Projects\DirectXTex\Bin\Desktop_2013\Win32\Debug;E:\Projects\DirectXTK\Bin\Desktop_2013\Win32\Debug;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x86\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Windows 7 Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -143,8 +143,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>E:\Projects\DirectXTex\DirectXTex;E:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Projects\DirectXTex\DirectXTex\Bin\Desktop_2012\Win32\Release;E:\Projects\DirectXTK\Bin\Desktop_2012\Win32\Release;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x86\release;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Projects\DirectXTex;E:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\Projects\DirectXTex\Bin\Desktop_2013\Win32\Release;E:\Projects\DirectXTK\Bin\Desktop_2013\Win32\Release;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x86\release;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Windows 7 Release|Win32'">
