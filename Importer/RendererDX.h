@@ -147,7 +147,7 @@ public:
     bool InitializeSwapChain(const HWND& hwnd, int height, int width);
     
     // Inherited Functions
-    void VClearBackGround(float* _color4);
+    void VClearBackGround(const float* _color4);
     void VOnLostDevice(void) {}
     void VOnRestore(void) {}
     void VOnResize(int w, int h);

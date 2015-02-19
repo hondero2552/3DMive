@@ -76,14 +76,12 @@ void RoundButton::DrawMe(void)
     if(m_bHoveringMe && m_effectHovering != HOVERING_EFFECT::NOHOVERINGEFFECT && !m_bImClicked && !m_bImPermanentlyActive)
     {
         m_SolidColorBrush_UseAll->SetColor( m_BrushColor_hovering );
-        if(m_effectHovering == HOVERING_EFFECT::DRAWOUTLINE_H)
-        {
+
+        if(m_effectHovering == HOVERING_EFFECT::DRAWOUTLINE_H)        
             UIButtonBase::m_pContext->DrawEllipse(m_ellipse, m_SolidColorBrush_UseAll, m_OutlineBrushSize);
-        }
-        else if(m_effectHovering == HOVERING_EFFECT::DRAWMASK_H)
-        {
-            UIButtonBase::m_pContext->FillEllipse(m_ellipse, m_SolidColorBrush_UseAll);
-        }
+        
+        else if(m_effectHovering == HOVERING_EFFECT::DRAWMASK_H)        
+            UIButtonBase::m_pContext->FillEllipse(m_ellipse, m_SolidColorBrush_UseAll);        
     }
     // if the button is pressed
     else if(m_bImClicked && m_effectClicked == CLICKED_EFFECT::DRAWMASK_C)

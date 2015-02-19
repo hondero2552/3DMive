@@ -111,20 +111,24 @@ void View::RenderScene(void)
     timer1.tick();
     timer2.tick();
     static double potentialFPS = 0;
+    
+    // keep it to approximately 60 fps
     if( timer1.TimeElapsed() > 15)
     {
         LARGE_INTEGER previous_tick;
         LARGE_INTEGER current_tick;
         QueryPerformanceCounter(&previous_tick);
         ++m_fps;
+        
         // Draw the meshes inside the screen i.e. imported meshes, grid, axis' arrows, etc
         m_pRenderer->VDrawScene();
-        if(m_UIVisible)
-        {
-            // Draw UI
+        
+        // Draw UI
+        if(m_UIVisible)            
             m_pUserInterface->DrawScene();
-        }
+        
         m_pRenderer->PresentScene();
+
         QueryPerformanceCounter(&current_tick);
 
         // Update the PotentialFPS variable
@@ -132,6 +136,7 @@ void View::RenderScene(void)
         timer1.RestartCount();
     }
 
+    // This is to set the potential frames per second
     if(timer2.TimeElapsed() > 999)
     {   
         m_pUserInterface->SetCurrentFPS(m_fps);

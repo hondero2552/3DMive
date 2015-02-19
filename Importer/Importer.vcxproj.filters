@@ -205,6 +205,9 @@
     <ClInclude Include="IUIElement2.h">
       <Filter>User Interface 2.0</Filter>
     </ClInclude>
+    <ClInclude Include="UIHelper.h">
+      <Filter>User Interface 2.0</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">

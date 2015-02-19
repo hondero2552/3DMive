@@ -187,7 +187,7 @@ void RendererDx::VOnResize(int w, int h)
     DepthStencilDesc.Height = m_iHeight;
     DepthStencilDesc.MipLevels = 1;
     DepthStencilDesc.ArraySize = 1;
-    DepthStencilDesc.Format = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
+    DepthStencilDesc.Format = DXGI_FORMAT_D32_FLOAT;
     DepthStencilDesc.SampleDesc.Count = m_iSamplecount;
     DepthStencilDesc.SampleDesc.Quality = m_iQualityLevel;
     DepthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -196,7 +196,7 @@ void RendererDx::VOnResize(int w, int h)
     hr = m_pDxDevice->CreateTexture2D(&DepthStencilDesc, NULL, &m_pDxDepthStencilBuff);
 
     D3D11_DEPTH_STENCIL_VIEW_DESC desc;
-    desc.Format = DXGI_FORMAT_D32_FLOAT_S8X24_UINT;
+    desc.Format = DXGI_FORMAT_D32_FLOAT;
     desc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DMS;
     desc.Flags = 0;
     desc.Texture2D.MipSlice = 0;
@@ -224,7 +224,7 @@ void RendererDx::VOnResize(int w, int h)
     }
 }
 
-void RendererDx::VClearBackGround(float* color4)
+void RendererDx::VClearBackGround(const float* color4)
 {
     m_pDxContext->ClearRenderTargetView(m_pDxRenderTargetView, color4);
     m_pDxContext->ClearDepthStencilView(m_pDxDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, NULL);
@@ -310,9 +310,8 @@ void RendererDx::VDrawScene(void)
     // Update constant buffers
     // We will only be drawing primitives as triangle-lists
     const float c = 0.63f;
-    float colo[4] = { 0.58f, c, c, 1.0f };
-    //float colo[4] = {0.45f, 0.55f, 0.65f, 1.0f};
-    VClearBackGround(colo);
+    const float color[4] = { 0.58f, c, c, 1.0f };
+    VClearBackGround(color);
 
     if (m_bShowAxis)
         DrawWorldAxis();
@@ -337,7 +336,7 @@ void RendererDx::VDrawScene(void)
         m_pDxContext->Draw(76, NULL);
     }
 
-    /*This is where we draw all the meshes in the scene that the user has imported*/
+    // This is where we draw all the meshes in the scene that the user has imported*/
     m_pDxContext->RSSetState(m_pDxRasterState_AntiAliasing);
     for (auto i = m_MeshList.begin(); i != m_MeshList.end(); ++i)
     {
@@ -394,17 +393,17 @@ void RendererDx::CreateRasterAndBlendStates(void)
     // ----------------------------------|
     D3D11_BLEND_DESC bd;
 
-    bd.AlphaToCoverageEnable = false;
-    bd.IndependentBlendEnable = false;
+    bd.AlphaToCoverageEnable    = false;
+    bd.IndependentBlendEnable   = false;
 
-    bd.RenderTarget[0].BlendEnable = true;
-    bd.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-    bd.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-    bd.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-    bd.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-    bd.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-    bd.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-    bd.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+    bd.RenderTarget[0].BlendEnable              = true;
+    bd.RenderTarget[0].SrcBlend                 = D3D11_BLEND_SRC_ALPHA;
+    bd.RenderTarget[0].DestBlend                = D3D11_BLEND_INV_SRC_ALPHA;
+    bd.RenderTarget[0].BlendOp                  = D3D11_BLEND_OP_ADD;
+    bd.RenderTarget[0].SrcBlendAlpha            = D3D11_BLEND_ONE;
+    bd.RenderTarget[0].DestBlendAlpha           = D3D11_BLEND_ZERO;
+    bd.RenderTarget[0].BlendOpAlpha             = D3D11_BLEND_OP_ADD;
+    bd.RenderTarget[0].RenderTargetWriteMask    = D3D11_COLOR_WRITE_ENABLE_ALL;
 
     m_pDxDevice->CreateBlendState(&bd, &m_pDxBlendState_Transparent);
 }
@@ -537,18 +536,12 @@ ID3D11Buffer* RendererDx::CreateFacesNormalBuffer(const Mesh* pMesh)
 
     // Fill in a buffer description.
     D3D11_BUFFER_DESC bufferDesc;
-    bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-    bufferDesc.ByteWidth = (sizeof(float3)) * (pMesh->GetPlygonCount() * 2);
-    bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-    bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-    bufferDesc.MiscFlags = 0;
+    bufferDesc.Usage            = D3D11_USAGE_DYNAMIC;
+    bufferDesc.ByteWidth        = (sizeof(float3)) * (pMesh->GetPlygonCount() * 2);
+    bufferDesc.BindFlags        = D3D11_BIND_VERTEX_BUFFER;
+    bufferDesc.CPUAccessFlags   = D3D11_CPU_ACCESS_WRITE;
+    bufferDesc.MiscFlags        = 0;
     bufferDesc.StructureByteStride = NULL;
-
-    // Fill in the subresource data.
-    /*D3D11_SUBRESOURCE_DATA InitData;
-    InitData.pSysMem            = &(pMesh->GetFacesNormal()[0]);
-    InitData.SysMemPitch        = 0;
-    InitData.SysMemSlicePitch   = 0;*/
 
     // Create the vertex buffer
     m_pDxDevice->CreateBuffer(&bufferDesc, nullptr, &lVB);
@@ -1185,7 +1178,6 @@ IDXGIDevice2* RendererDx::GetDXGIDevice(void)
     {
         return nullptr;
     }
-
     return pDXGIDevice;
 }
 
@@ -1200,9 +1192,7 @@ void RendererDx::PresentScene(void)
     DXGI_PRESENT_PARAMETERS pParameters;
     SecureZeroMemory(&pParameters, sizeof(DXGI_PRESENT_PARAMETERS));
 
-    hr = m_pDxSwapchain->Present1(0, 0, &pParameters);
-
-    uint debug = 0;
+    hr = m_pDxSwapchain->Present1(0, 0, &pParameters);// By examiniing the return parameter we might be able to prevent a system crash due to DX loosing the device
 }
 
 void RendererDx::CreateWorldAxes(float x, float y, float z)
@@ -1329,7 +1319,7 @@ void RendererDx::CreateGrid(float x, float z)
 {
     const float Xc = x / 10;
     const float Zc = z / 10;
-    const float yOffset = -0.4f; // So the grid would be below the (0,0,0) origin and below the xy-plane
+    const float yOffset = -0.4f; // So the grid would be JUST below the (0,0,0) origin and below the xy-plane
 
     vector<float3> points;
     points.reserve(76);
@@ -1611,5 +1601,4 @@ void RendererDx::CalCulateVisibleFacesNormals(void)
     }
     m_pDxContext->Unmap(pDynamicVertexBuffer, NULL);
     pdxMesh->SetFacesNormalToDrawCount(iFacesNormalsToDraw);
-    uint debug = 0;
 }

@@ -233,17 +233,18 @@ void UserInterface::DrawScene(void)
     m_pD2DContext->BeginDraw();
 
     m_pCurrentScreen->DrawElements();
-    if(m_pContextMenuScreen->IsHidden() == false)
+    
+    if(!m_pContextMenuScreen->IsHidden())
         m_pContextMenuScreen->DrawElements();
 
     // Draw frame statistics, i.e. FPS, Potential-FPS, Triangle Count, handedness
     {
-        const float SEPARATION_FACTOR = 14.0f;
+        const float VERTICAL_SEPARATION_FACTOR = 14.0f;// This should be implemented to reflect the size of the fonts being used plus 2 pixels vertically.
         D2D1_POINT_2F point;
-        point.x = 1.0f;
+        point.x = 1.0f;// This is to align the text from the left as well as separate it from the window border
 
         // Draw FPS
-        if(m_pTextLayoutFPS)
+        if(m_pTextLayoutFPS) // When will this NOT be true?
         {
             point.y = 1.0f;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutFPS.Get(), m_iCurrentFPS >= 60 ? m_pTextBrush : m_pTextBrushRed.Get());
@@ -252,30 +253,30 @@ void UserInterface::DrawScene(void)
         // Draw Potential-FPS
         if(m_pTextLayoutPotentialFPS)
         {
-            point.y += SEPARATION_FACTOR;
+            point.y += VERTICAL_SEPARATION_FACTOR;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutPotentialFPS.Get(), m_pTextBrush);
         }
 
         // Draw the coordinate system info
         if(m_pTextLayoutCorrdinateSystem)
         {
-            point.y += SEPARATION_FACTOR;
+            point.y += VERTICAL_SEPARATION_FACTOR;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutCorrdinateSystem.Get(), m_pTextBrush);
         }
 
         // Draw The Triangle Count
         if(m_pTextLayoutTriangleCount && m_iTriangleCount > 0)
         {
-            point.y += SEPARATION_FACTOR;
+            point.y += VERTICAL_SEPARATION_FACTOR;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutTriangleCount.Get(), m_pTextBrush);
             // Draw length
-            point.y += SEPARATION_FACTOR;
+            point.y += VERTICAL_SEPARATION_FACTOR;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutMeshLength.Get(), m_pTextBrush);
             // Draw width
-            point.y += SEPARATION_FACTOR;
+            point.y += VERTICAL_SEPARATION_FACTOR;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutMeshWidth.Get(), m_pTextBrush);
             // Draw height
-            point.y += SEPARATION_FACTOR;
+            point.y += VERTICAL_SEPARATION_FACTOR;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutMeshHeight.Get(), m_pTextBrush);
         }
     }
