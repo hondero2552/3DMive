@@ -13,7 +13,7 @@ static void createcircle(const float2& center, const float& radius, const float 
         // y = sin(angle in radians) * radius
         // x = cos(angle in radians) * radius
         const double CIRCUMFERENCE  = 2*PI_DOUBLE*radius;
-        const uint VERTS_NUMBER     = static_cast<uint>(CIRCUMFERENCE * 0.90);
+        const uint VERTS_NUMBER     = static_cast<uint>(CIRCUMFERENCE * 0.90)*2;// I need to explain this code better
 
     }
     // calculate inside triangles(for the fillable area)
