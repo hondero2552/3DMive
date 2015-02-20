@@ -14,6 +14,18 @@ static void createcircle(const float2& center, const float& radius, const float 
         // x = cos(angle in radians) * radius
         const double CIRCUMFERENCE  = 2*PI_DOUBLE*radius;
         const uint VERTS_NUMBER     = static_cast<uint>(CIRCUMFERENCE * 0.90)*2;// I need to explain this code better
+        std::vector<float2> vertices;
+        vertices.reserve(VERTS_NUMBER);
+
+        const double radians_interval = 2.0 / (VERTS_NUMBER / 2);
+        double angle = 0.0;
+        while (angle < 2.0)
+        {
+            // inner circle coordinates
+            float2 vertex;
+            // x coordinate for innner 
+
+        }
 
     }
     // calculate inside triangles(for the fillable area)
