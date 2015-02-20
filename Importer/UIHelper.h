@@ -23,8 +23,12 @@ static void createcircle(const float2& center, const float& radius, const float 
         {
             // inner circle coordinates
             float2 vertex;
-            // x coordinate for innner 
-
+            // x coordinate for innner
+            float x = cos(angle) * (radius - outline_width);
+            // y coordinate for inner vertices
+            float y = cos(angle) * (radius - outline_width);
+            // next vertex
+            angle += radians_interval;
         }
 
     }
