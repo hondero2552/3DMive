@@ -30,7 +30,6 @@ static void createcircle(const float2& center, const float& radius, const float 
             // next vertex
             angle += radians_interval;
         }
-
     }
     // calculate inside triangles(for the fillable area)
 
