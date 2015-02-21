@@ -9,8 +9,7 @@ class RoundButton : public UIButtonBase
 private:
     float m_xcoord, m_ycoord, m_radius;
     // 
-    D2D1_ELLIPSE m_ellipse;
-    
+    D2D1_ELLIPSE m_ellipse;// the CIRCLE structure found in UIHelper.h will replace this. 
 
 public:
     RoundButton(void);

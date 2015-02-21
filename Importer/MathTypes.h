@@ -334,7 +334,7 @@ namespace omi
             }
         }
     };
-    //Vertex structures
+    // Vertex structures
     struct Vertex
     {
         double3 Position;
