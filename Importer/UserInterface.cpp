@@ -540,6 +540,11 @@ void UserInterface::CreateMainScreen(void)
         const float F_SEPARATION_FACTOR     = (F_WIDTH - (F_BUTTON_DIAMETER * BUTTON_COUNT)) / BUTTON_COUNT;
         const float F_BRUSH_SIZE            = 2.0f;
 
+        const Color NEW_default_color(COLOR_NAME::LightGray, 1.0f);
+        const Color NEW_hovering_color(COLOR_NAME::White, 1.0f);
+        const Color NEW_clicked_color(COLOR_NAME::LightCyan, 0.6f);
+        const Color NEW_textColor(COLOR_NAME::White, 1.0f);
+
         const D2D_COLOR_F default_color     = D2D1::ColorF(D2D1::ColorF::LightGray, 1.0f);
         const D2D_COLOR_F hovering_color    = D2D1::ColorF(D2D1::ColorF::White,     1.0f);
         const D2D_COLOR_F clicked_color     = D2D1::ColorF(D2D1::ColorF::LightCyan, 0.6f);
@@ -561,7 +566,7 @@ void UserInterface::CreateMainScreen(void)
             lpBitmapBrush = nullptr;
 
             // Effects
-            //ImportExportButton->SetOutlineBrushSize(F_BRUSH_SIZE);
+            // ImportExportButton->SetOutlineBrushSize(F_BRUSH_SIZE);
             ImportExportButton->SetOutlineBrushSize(4.0f);
             ImportExportButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
             ImportExportButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
@@ -1042,10 +1047,10 @@ void UserInterface::CreateMainScreen(void)
 
 void UserInterface::CreateContexMenu(void)
 {
-    const float TRANSPARENCY_FACTOR = 0.5f;
+    const float TRANSPARENCY_FACTOR     = 0.5f;
 
-    ID2D1BitmapBrush* lpBitmapBrush = nullptr;
-    SquareButton* lpRoundButton      = nullptr;
+    ID2D1BitmapBrush* lpBitmapBrush     = nullptr;
+    SquareButton* lpRoundButton         = nullptr;
 
     uint size = sizeof(RoundButton);
 
@@ -1059,14 +1064,14 @@ void UserInterface::CreateContexMenu(void)
     // Context Menu     |
     // -----------------|
     {
-        Screen* lpScreen    = nullptr;
         omi::Rectangle rect;
         rect.mleft      = m_RenderTargetSize.width * .87f;
         rect.mright     = rect.mleft + 50.0f;
         rect.mtop       = m_RenderTargetSize.height * .10f;
         rect.mbottom    = rect.mtop + 250.0f;
         float yoffset   = 250.0f - (250.0f * .968f);
-
+        
+        Screen* lpScreen = nullptr;
         lpScreen = new Screen();
         lpScreen->InitializeScreen(rect.mleft, rect.mright, rect.mtop, rect.mbottom, 0.2f, 7.0f, SCREEN::CAMERA_SETTINGS);
 

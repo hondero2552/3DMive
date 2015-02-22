@@ -302,6 +302,7 @@
   <ItemGroup>
     <ClInclude Include="3DMesh Helper.h" />
     <ClInclude Include="color codes.h" />
+    <ClInclude Include="IRenderer.h" />
     <ClInclude Include="UIHelper.h" />
     <ClInclude Include="IUIElement2.h" />
     <ClInclude Include="timer.h" />

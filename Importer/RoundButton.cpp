@@ -69,7 +69,10 @@ void RoundButton::Initialize(const float2& center, float radius, UIBUTTON button
     UIButtonBase::m_pContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), &m_SolidColorBrush_UseAll);
     m_SolidColorBrush_UseAll->SetTransform( m_Trasnform );
 }
-
+void RoundButton::Initialize(const float2& center, float radius, uint _outlineWidth, UIBUTTON button, const wstring& text, const Color& _outlineColor)
+{
+    
+}
 void RoundButton::DrawMe(void)
 {
     // Check if the mouse is hovering on the button and the button is not pressed
@@ -107,7 +110,7 @@ void RoundButton::DrawMe(void)
             UIButtonBase::m_pContext->FillEllipse(m_ellipse, m_SolidColorBrush_UseAll);        
     }
 
-    UIButtonBase::m_pContext->FillEllipse(m_ellipse, m_pBitmapBrush_Current);
+    UIButtonBase::m_pContext->FillEllipse(m_ellipse, m_pBitmapBrush_Current);// this draws the image in the center of the button
 
     // Draw the buttons text
     if(m_bDrawText)

@@ -19,8 +19,6 @@ using std::vector;
 using std::list;
 using std::wstring;
 
-// List of Game views
-
 #define IMPORT_FROM_BUTTON  1000
 #define EXPORT_TO_BUTTON    1001
 #define EXECUTE_BUTTON      1002
@@ -28,8 +26,6 @@ using std::wstring;
 #define IMPORT_FROM_EDITBOX 1003
 #define EXPORT_TO_EDITBOX   1004
 #define EXECUTE_STATUS      1005
-
-
 
 // global enums
 enum HWNDS { HWND_PARENT, HWND_IMPORT_FROM, HWND_EXPORT_TO, HWND_MESH_DIPLAY, HWND_EDIT_BOX_IMPORT_EXPORT};

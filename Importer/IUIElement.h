@@ -1,7 +1,7 @@
 #pragma once
 #include "DebugDX.h"
 #include <dwrite_1.h>
-
+#include "UIHelper.h"
 #include "UIElement Types.h"
 #include "math_funcs.h"
 
@@ -65,22 +65,27 @@ protected:
     ACTIVE_EFFECT       m_effectActive;
     DEFAULT_EFFECT      m_effectDefault;
 
-    D2D1_COLOR_F m_BrushColor_hovering;
-    D2D1_COLOR_F m_BrushColor_default;
+    Color new_m_BrushColor_active;
+    Color new_m_BrushColor_buttontext;
+    Color new_m_BrushColor_clicked;
+    Color new_m_BrushColor_default;
+    Color new_m_BrushColor_hovering;
+
     D2D1_COLOR_F m_BrushColor_active;
-    D2D1_COLOR_F m_BrushColor_clicked;
     D2D1_COLOR_F m_BrushColor_buttontext;
-    
-    ID2D1SolidColorBrush* m_SolidColorBrush_UseAll;
-    
+    D2D1_COLOR_F m_BrushColor_clicked;
+    D2D1_COLOR_F m_BrushColor_default;
+    D2D1_COLOR_F m_BrushColor_hovering;
+
+    ID2D1BitmapBrush* m_pBitmapBrush_ClickedStatus;
+    ID2D1BitmapBrush* m_pBitmapBrush_Current;
     ID2D1BitmapBrush* m_pBitmapBrush_DefaultStatus;
     ID2D1BitmapBrush* m_pBitmapBrush_MouseHoveringStatus;
-    ID2D1BitmapBrush* m_pBitmapBrush_ClickedStatus;
     ID2D1BitmapBrush* m_pBitmapBrush_PermanentlyActiveStatus;
     
+    ID2D1SolidColorBrush* m_SolidColorBrush_UseAll;
+
     IDWriteTextLayout* m_pID2DTextLayout;
-    // 
-    ID2D1BitmapBrush* m_pBitmapBrush_Current;
 
     void ResetTrasform(void);
 

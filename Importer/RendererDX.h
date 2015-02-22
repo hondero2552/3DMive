@@ -1,5 +1,5 @@
 #pragma once
-#include "DebugDX.h"//This header file includes all DirectX's required headers
+#include "DebugDX.h"// This header file includes all DirectX's required headers
 #include "Light_sources.h"
 #include "Cam.h"
 #include "Mesh.h"

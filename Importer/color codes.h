@@ -1,9 +1,11 @@
 #if defined(WINDOWS) || defined(_WINDOWS)
 #pragma once
 #endif
-#include "math_funcs.h"
+
 #ifndef COLOR_CODES_H
 #define COLOR_CODES_H
+#include "math_funcs.h"
+
 // These color names were obtained from http://www.w3schools.com/html/html_colornames.asp
 enum COLOR_NAME
 {
