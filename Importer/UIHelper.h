@@ -10,12 +10,20 @@ using std::wstring;
 using namespace omi;
 class Circle
 {
-    short m_outline_width;
-    short m_radius;
+    unsigned short m_outline_width;
+    unsigned short m_radius;
     float2 m_center;
 public:
     Circle(void) : m_outline_width(1), m_radius(1), m_center() { }
+    unsigned short GetRadius(void) const { return m_radius; }
+    unsigned short GetOutlineWidth(void) const { return m_outline_width; }
 };
+static bool operator ==(const Circle& _left, const Circle& _right)
+{
+    const bool bEqualRadius         = _left.GetRadius() == _right.GetRadius();
+    const bool bEqualOutlineWidth   = _left.GetOutlineWidth() == _right.GetOutlineWidth();
+    return (bEqualRadius && bEqualOutlineWidth);
+}
 
 static void createcircle(const float2& center, const float& radius, const float outline_width)
 {
@@ -49,6 +57,7 @@ static void createcircle(const float2& center, const float& radius, const float 
 
     // calculate UV indices for inner fillable area
 }
+
 static float4 getColor(const COLOR_NAME& color, const float& alpha = 1.0f)
 {
     const uint redShift     = 16;

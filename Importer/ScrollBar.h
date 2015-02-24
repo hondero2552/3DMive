@@ -30,7 +30,8 @@ class ScrollBar : public IUIElement
     D2D1_COLOR_F m_buttonColor;
     D2D1_COLOR_F m_FilledRectColor;
 
-    UIBUTTON m_type;
+    UIBUTTON m_id;
+    BUTTON_TYPE m_type;
 
     bool m_bRightButtonClicked;
     bool m_bLeftButtonClicked;
@@ -53,7 +54,7 @@ public:
     
     // Inherited methods
     inline bool IsInsideElement(int x, int y);
-    inline UIBUTTON GetButton(void) const { return m_type; }
+    inline UIBUTTON GetButton(void) const { return m_id; }
     float2 GetCenterPoint(void) const;
     float GetRadius(void) const;
 
@@ -86,5 +87,7 @@ public:
     {
         SAFE_RELEASE_COM( m_pBitmapBrush_leftbutton );
         SAFE_RELEASE_COM( m_pBitmapBrush_rightbutton );
-    }    
+    }
+
+    BUTTON_TYPE GetButtonType(void) const { return m_type; }
 };

@@ -5,7 +5,7 @@ void SquareButton::Initialize(const float left, float top, float width, float he
     assert(UIButtonBase::m_pContext != nullptr);
     assert(UIButtonBase::m_pWriteFactory != nullptr);
 
-    m_type      = button;
+    m_id      = button;
     m_width     = width;
     m_height    = height;
     m_radius    = m_width/2.0f;

@@ -1,9 +1,9 @@
 #include "RoundButton.h"
 
 RoundButton::RoundButton(void) :
-    m_xcoord(0.0f), m_ycoord(0.0f), m_radius(0.0f)
+m_xcoord(0.0f), m_ycoord(0.0f), m_radius(0.0f)
 {
-
+    m_type = BUTTON_TYPE::ROUND_BUTTON;
 }
 
 RoundButton::~RoundButton(void)
@@ -35,7 +35,7 @@ void RoundButton::Initialize(const float2& center, float radius, UIBUTTON button
     assert(UIButtonBase::m_pContext != nullptr);
     assert(UIButtonBase::m_pWriteFactory != nullptr);
 
-    m_type = button;
+    m_id = button;
     m_xcoord = center.u;
     m_ycoord = center.v;
     m_radius = radius;
@@ -59,9 +59,8 @@ void RoundButton::Initialize(const float2& center, float radius, UIBUTTON button
         hr = UIButtonBase::m_pWriteFactory->CreateTextLayout(text.c_str(), text.length(), pTextFormat.Get(), box_witdh, FONT_SIZE, &m_pID2DTextLayout);
     }
     else
-    {
         m_bDrawText = false;
-    }
+    
 
     // Create Transformation matrix that will be applied to every brush so the bitmap is centered
     const float2 newOrigin( (center.u - m_radius), (center.v - m_radius));

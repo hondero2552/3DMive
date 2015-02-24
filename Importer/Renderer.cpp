@@ -1,5 +1,7 @@
 #include "RendererDX.h"
 #include "math_funcs.h"
+#include "RoundButton.h"
+#include "SquareButton.h"
 
 using namespace DirectX;
 using std::unique_ptr;
@@ -1601,4 +1603,21 @@ void RendererDx::CalCulateVisibleFacesNormals(void)
     }
     m_pDxContext->Unmap(pDynamicVertexBuffer, NULL);
     pdxMesh->SetFacesNormalToDrawCount(iFacesNormalsToDraw);
+}
+
+void RendererDx::AddUIElement(IUIElement* _ptrUIElement)
+{
+    const BUTTON_TYPE lType = _ptrUIElement->GetButtonType();
+    if (lType == BUTTON_TYPE::ROUND_BUTTON)
+    {
+
+    }
+    else if (lType == BUTTON_TYPE::SQUARE_BUTTON)
+    {
+
+    }
+    else if (lType == BUTTON_TYPE::SCROLL_BAR)
+    {
+
+    }
 }

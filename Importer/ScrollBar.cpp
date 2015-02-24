@@ -6,7 +6,7 @@ ID2D1BitmapBrush* ScrollBar::m_pBitmapBrush_rightbutton = nullptr;
 ScrollBar::ScrollBar(void) : m_bRightButtonClicked(false), m_bLeftButtonClicked(false), m_bEmpyRectangleClick(false),
     m_bhoveringEmptyRect(false), m_bhoveringLeftButton(false), m_bhoveringRigthButton(false),
     m_currentValue(0.0f), m_minvalue(0), m_movementinterval(0.0), m_iframe(0), m_pID2DTextLayoutTitle(nullptr), m_pSolidColorBrush(nullptr),
-    m_pID2DTextLayoutValue(nullptr)
+    m_pID2DTextLayoutValue(nullptr), m_type(BUTTON_TYPE::SCROLL_BAR)
 {
 
 }
@@ -177,7 +177,7 @@ bool ScrollBar::Initialize(float left, float top, UIBUTTON type, const wstring& 
     m_token         = token;
     m_minvalue          = minValue;
     m_movementinterval  = (100 - m_minvalue) / 100.0f;
-    m_type              = type;
+    m_id              = type;
 
     m_pContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::DodgerBlue), &m_pSolidColorBrush);
 
@@ -233,14 +233,10 @@ bool ScrollBar::Initialize(float left, float top, UIBUTTON type, const wstring& 
 
 void ScrollBar::MouseHoveringOnMe(bool yesORno)
 {
-    if(yesORno)
-    {
-        m_bEmpyRectangleClick = m_bLeftButtonClicked = m_bRightButtonClicked = false;
-    }
-    else
-    {
-        m_bhoveringEmptyRect = m_bhoveringLeftButton = m_bhoveringRigthButton = false;
-    }
+    if(yesORno)    
+        m_bEmpyRectangleClick = m_bLeftButtonClicked = m_bRightButtonClicked = false;    
+    else    
+        m_bhoveringEmptyRect = m_bhoveringLeftButton = m_bhoveringRigthButton = false;    
 }
 
 void ScrollBar::MouseClickedMe(void) 

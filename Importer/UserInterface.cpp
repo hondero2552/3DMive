@@ -86,9 +86,8 @@ bool UserInterface::InitD2DDevices(IView* pview, IDXGIDevice2* d3dDevice)
     hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(m_pDWriteFactory), reinterpret_cast<IUnknown **>(&m_pDWriteFactory));
 
     if(SUCCEEDED(hr))
-    {
         hr = m_pDWriteFactory->CreateTextFormat(L"Consolas", nullptr, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 14.0f, L"", &m_pTextFormat);
-    }
+    
 
     // This will always need to be done before anything else
     UIButtonBase::SetContext(m_pD2DContext);
@@ -556,7 +555,6 @@ void UserInterface::CreateMainScreen(void)
         // Import/Export Menu
         {
             RoundButton* ImportExportButton = new RoundButton();
-
             horizontal_separation += F_SEPARATION_FACTOR + F_BUTTON_DIAMETER;
 
             ImportExportButton->Initialize(float2(screen_rect.left + horizontal_separation, screen_rect.top + F_VERTICAL_SEPARATION), F_BUTTON_RADIUS, UIBUTTON::IMPORTEXPORT, wstring(L"Import/Export"), textColor);

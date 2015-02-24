@@ -69,6 +69,7 @@ void Screen::AddToQuadrant(IUIElement* pUIElement)
 
 void Screen::AddUIElement(IUIElement* ptrUIElement)
 {
+    // Here is where we will be adding the code to add the 2d buttons/geometry to the renderer so it can track vertices, textures, and indices information
     m_UIElementsList.push_front(ptrUIElement);    
     AddToQuadrant(ptrUIElement);
 }

@@ -1,4 +1,8 @@
+#if defined(WINDOWS) || defined(_WINDOWS)
 #pragma once
+#endif
+#ifndef ROUNDBUTTON_H
+#define ROUNDBUTTON_H
 #include "IUIElement.h"
 #include "MathTypes.h"
 
@@ -11,8 +15,9 @@ private:
     // 
     D2D1_ELLIPSE m_ellipse;// the CIRCLE structure found in UIHelper.h will replace this. 
     Circle m_circle;
-public:
+public:    
     RoundButton(void);
+    RoundButton(const RoundButton& UIE) = delete;
     ~RoundButton(void);
     
     float2 GetCenterPoint(void) const { return float2(m_xcoord, m_ycoord); }
@@ -25,7 +30,6 @@ public:
     void DrawMe();
 
     void RePositionElement(D2D1_POINT_2F& _newTopLeft);
-
-private:
-    RoundButton(const RoundButton& UIE) { }
+    
 };
+#endif

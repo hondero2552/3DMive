@@ -10,7 +10,7 @@ using namespace omi;
 const float FONT_SIZE               = 12.0f;
 static const wchar_t* wzFONT_TYPE   = L"Consolas";
 class Screen;
-
+enum class BUTTON_TYPE {UNDEFINED, ROUND_BUTTON, SQUARE_BUTTON, SCROLL_BAR};
 class IUIElement
 {
     IUIElement(const IUIElement& UIE) { };
@@ -22,7 +22,7 @@ public:
     virtual inline UIBUTTON GetButton(void) const = 0;
     virtual float2 GetCenterPoint(void) const = 0;
     virtual float GetRadius(void) const = 0;
-
+    
     virtual inline void UnclickedMe(void) = 0;
     virtual inline bool isClicked(void) = 0;
 
@@ -32,6 +32,8 @@ public:
     virtual void DrawMe(void) = 0;
     virtual void RestoreToPreviousStatus(void) = 0;
     virtual const wstring& VGetElementText(void) const = 0;
+
+    virtual BUTTON_TYPE GetButtonType(void) const = 0;
 
     virtual Screen* GetChildScreen(void) = 0;
     virtual void SetChildScreen(Screen* pScreen) = 0;
@@ -45,7 +47,7 @@ protected:
 
 class UIButtonBase : public IUIElement
 {    
-    UIButtonBase(const UIButtonBase& B){ } // Innaccessible copy constructor
+    UIButtonBase(const UIButtonBase& B) { } // Innaccessible copy constructor
 protected:
     bool m_bHoveringMe;
     bool m_bImClicked;
@@ -55,7 +57,8 @@ protected:
     bool m_bDrawText;
     Screen* m_pChildScreen;
     wstring m_wzText;
-    UIBUTTON m_type;
+    UIBUTTON m_id;
+    BUTTON_TYPE m_type;
     BUTTON_STATUS m_previousStatus;    
     D2D1_MATRIX_3X2_F m_Trasnform;
     
@@ -106,7 +109,8 @@ public:
         m_pBitmapBrush_ClickedStatus(nullptr),
         m_pBitmapBrush_PermanentlyActiveStatus(nullptr),
         m_pID2DTextLayout(nullptr),
-        m_pChildScreen(nullptr)
+        m_pChildScreen(nullptr),
+        m_type(BUTTON_TYPE::UNDEFINED)
     {  }
 
     // Destructor
@@ -121,7 +125,7 @@ public:
         SAFE_RELEASE_COM( m_pBitmapBrush_ClickedStatus );
         SAFE_RELEASE_COM( m_pBitmapBrush_PermanentlyActiveStatus );
     }
-
+    
     void UnclickedMe(void) { m_bImClicked = false; }
     inline bool isClicked(void) { return m_bImClicked; }
 
@@ -145,8 +149,9 @@ public:
     void SetMosueHoveringStatusBitmap(ID2D1BitmapBrush* Bitmap);
     void SetClickedStatusBitmap(ID2D1BitmapBrush* Bitmap);
     void SetPermanentActiveStatusBitmap(ID2D1BitmapBrush* Bitmap);
-    
-    UIBUTTON GetButton(void) const { return m_type; }
+
+    BUTTON_TYPE GetButtonType(void) const { return m_type; }
+    UIBUTTON GetButton(void) const { return m_id; }
     
     D2D1_MATRIX_3X2_F& GetTransform(void) { return m_Trasnform; }
 

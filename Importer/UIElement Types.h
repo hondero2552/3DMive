@@ -1,4 +1,8 @@
+#if defined(WINDOWS) || defined(_WINDOWS)
 #pragma once
+#endif
+#ifndef UIELEMENT_TYPES_H
+#define UIELEMENT_TYPES_H
 
 enum UIBUTTON 
 {   
@@ -89,3 +93,4 @@ enum DEFAULT_EFFECT
     DRAWOUTLINE_D,
     DRAWMASK_D
 };
+#endif

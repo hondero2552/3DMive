@@ -4,7 +4,7 @@
 #include "Cam.h"
 #include "Mesh.h"
 #include "DXMesh.h"
-
+#include "IUIElement.h"
 #include <DirectXTex.h>
 #include <DDSTextureLoader.h>
 
@@ -145,6 +145,14 @@ public:
 
     bool InitializeDeviceAndContext(void);
     bool InitializeSwapChain(const HWND& hwnd, int height, int width);
+
+    /*******************************************/
+    // These functions are the basis for the user interface implementation 2.0
+    
+    void AddUIElement(IUIElement* _ptrUIElement);
+    
+    /*******************************************/
+    
     
     // Inherited Functions
     void VClearBackGround(const float* _color4);
