@@ -10,67 +10,96 @@ using std::wstring;
 using namespace omi;
 class Circle
 {
-    unsigned short m_outline_width;
-    unsigned short m_radius;
+    /*All this mesaurements are in pixel size.*/
+    float m_outline_width;
+    float m_radius;
     float2 m_center;
 public:
     Circle(void) : m_outline_width(1), m_radius(1), m_center() { }
-    unsigned short GetRadius(void) const { return m_radius; }
-    unsigned short GetOutlineWidth(void) const { return m_outline_width; }
+    float GetRadius(void) const { return m_radius; }
+    float GetOutlineWidth(void) const { return m_outline_width; }
 };
-static bool operator ==(const Circle& _left, const Circle& _right)
-{
-    const bool bEqualRadius         = _left.GetRadius() == _right.GetRadius();
-    const bool bEqualOutlineWidth   = _left.GetOutlineWidth() == _right.GetOutlineWidth();
-    return (bEqualRadius && bEqualOutlineWidth);
-}
 
-static void createcircle(const float2& center, const float& radius, const float outline_width)
+static StrPtrFloat& createcircle(const float2& center, const float& _radius, const float outline_width)
 {
-    // calculate vertices
+    struct lCircleVertex
     {
-        // y = sin(angle in radians) * radius
-        // x = cos(angle in radians) * radius
-        const double CIRCUMFERENCE = 2 * PI_DOUBLE*radius;
-        const uint VERTS_NUMBER = static_cast<uint>(CIRCUMFERENCE * 0.90) * 2;// I need to explain this code better
-        std::vector<float2> vertices;
-        vertices.reserve(VERTS_NUMBER);
+        float2 mPosW;
+        float2 mUV;
+    };
 
-        const double radians_interval = 2.0 / (VERTS_NUMBER / 2);
+    // calculate vertices
+    const uint CIRCUMFERENCE = static_cast<uint>(2 * PI_DOUBLE * _radius);
+    const uint VERTS_NUMBER = static_cast<uint>((CIRCUMFERENCE % 2 == 0 ? CIRCUMFERENCE : CIRCUMFERENCE + 1));// this ensures the vertices amount is always even
+    const double radians_interval = 2.0 / static_cast<double>(VERTS_NUMBER);
+
+    // Allocate the necessary memory to prevent std::vector from calling the expensive allocator function every time the vector increases in size
+    std::vector<lCircleVertex> vertices;
+    vertices.reserve(VERTS_NUMBER);
+
+    /* Generate the vertices for the circle in World-Space*/
+    for (short circle = 1; circle < 3; ++circle)
+    {
         double angle = 0.0;
-        while (angle < 2.0)
+        const double lRadius = circle == 1 ? (_radius - outline_width) : _radius;
+        for (size_t vertex_index = 0; vertex_index < VERTS_NUMBER; ++vertex_index)
         {
-            // inner circle coordinates
-            float2 vertex;
-            // x coordinate for innner
-            const float x = static_cast<float>(cos(angle) * (radius - outline_width));
-            // y coordinate for inner vertices
-            const float y = static_cast<float>(cos(angle) * (radius - outline_width));
+            // x/y coordinates for innner circle vertices
+            const float xPosW = static_cast<float>(cos(angle) * (lRadius));
+            const float yPosW = static_cast<float>(sin(angle) * (lRadius));
 
-            vertex.u = x;
-            vertex.v = y;
+            // UV coordinates for inner circle
+            const float uTexCoord_World = xPosW == 0.0f ? (0.50f) : (xPosW < 0.0f ? 1.0f / (lRadius - abs(xPosW)) : 1.0f / (lRadius + xPosW));
+            const float vTexCoord_World = yPosW == 0.0f ? (0.50f) : (yPosW < 0.0f ? 1.0f / (lRadius + abs(xPosW)) : 1.0f / (lRadius - yPosW));
+
+            // save the vertex
+            lCircleVertex lvertex;
+            lvertex.mPosW.u = xPosW;
+            lvertex.mPosW.v = yPosW;
+            lvertex.mUV.u   = uTexCoord_World;
+            lvertex.mUV.v   = vTexCoord_World;
+            vertices.push_back(lvertex);
+
             // next vertex
             angle += radians_interval;
         }
     }
-    // calculate inside triangles(for the fillable area)
+   
+    /* Generate Indices */
+    vector<unsigned short> indices;
+    indices.reserve(VERTS_NUMBER * 3);
+    const unsigned short HALF_VERTICES = VERTS_NUMBER / 2;
+    for (unsigned short i = 0; i < HALF_VERTICES; ++i)
+    {
+        const unsigned short BOTTOM_RIGHT   = i;
+        const unsigned short TOP_RIGHT      = i + HALF_VERTICES;
+        const unsigned short TOP_LEFT       = (TOP_RIGHT + 1 < (VERTS_NUMBER + 1)) ? (TOP_RIGHT + 1) : (HALF_VERTICES + 1);
+        const unsigned short BOTTOM_LEFT    = (BOTTOM_LEFT + 1 < (HALF_VERTICES + 1)) ? BOTTOM_LEFT + 1 : 0;
 
-    // calculate UV indices for inner fillable area
+        // clockwise
+        indices.push_back(BOTTOM_RIGHT);
+        indices.push_back(BOTTOM_LEFT);
+        indices.push_back(TOP_LEFT);
+
+        indices.push_back(BOTTOM_RIGHT);
+        indices.push_back(TOP_LEFT);
+        indices.push_back(TOP_RIGHT);
+    }
 }
 
 static float4 getColor(const COLOR_NAME& color, const float& alpha = 1.0f)
 {
-    const uint redShift     = 16;
-    const uint greenShift   = 8;
-    const uint blueShift    = 0;
+    const uint redShift = 16;
+    const uint greenShift = 8;
+    const uint blueShift = 0;
 
-    const uint redMask      = (0xff << redShift);
-    const uint greenMask    = (0xff << greenShift);
-    const uint blueMask     = (0xff << blueShift);
+    const uint redMask = (0xff << redShift);
+    const uint greenMask = (0xff << greenShift);
+    const uint blueMask = (0xff << blueShift);
 
-    const float R = static_cast<float>((color & redMask)   >> redShift) / 255.0f;
+    const float R = static_cast<float>((color & redMask) >> redShift) / 255.0f;
     const float G = static_cast<float>((color & greenMask) >> greenShift) / 255.0f;
-    const float B = static_cast<float>((color & blueMask)  >> blueShift) / 255.0f;
+    const float B = static_cast<float>((color & blueMask) >> blueShift) / 255.0f;
     const float A = alpha;
     return float4(R, G, B, A);
 }
@@ -100,7 +129,7 @@ private:
     float a;
 };
 
-enum BRUSH_TYPE { UNDEFINED_BRUSH= 0xDEADDDD, SOLID_COLOR = 0X5011D, BITMAP_BRUSH = 0xB118AB };
+enum BRUSH_TYPE { UNDEFINED_BRUSH = 0xDEADDDD, SOLID_COLOR = 0X5011D, BITMAP_BRUSH = 0xB118AB };
 class BrushBase
 {
 public:
@@ -117,7 +146,7 @@ public:
     SolidColorBrush(void){ SetBrushType(BRUSH_TYPE::SOLID_COLOR); }
     BRUSH_TYPE GetType(void) const { return BrushBase::GetType(); }
     void SetColor(const Color& _color){ m_color = _color; }
-    const Color& GetColor (void) const { return m_color; }
+    const Color& GetColor(void) const { return m_color; }
 private:
     Color m_color;
 };

@@ -476,7 +476,7 @@ bool RendererDx::AddMesh(const Mesh* pMesh)
     // Load appropiate shaders and process the Materials/Indices per polygon groups
     ProcessPerGroupData(pMesh->GetPerPolygonGroupData(), *pDxMesh);
 
-    // Only add the mesh if it's addable
+    // Only add the mesh if it's addable; i.e. it has no erros that will prevent the proper rendering
     if (pDxMesh->IsAddable())
     {
 
@@ -1610,6 +1610,9 @@ void RendererDx::AddUIElement(IUIElement* _ptrUIElement)
     const BUTTON_TYPE lType = _ptrUIElement->GetButtonType();
     if (lType == BUTTON_TYPE::ROUND_BUTTON)
     {
+        // Create the vertices; POS_W, UV-coordinates.
+
+        //
 
     }
     else if (lType == BUTTON_TYPE::SQUARE_BUTTON)

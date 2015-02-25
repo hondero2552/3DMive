@@ -17,6 +17,7 @@
 #include <forward_list>
 
 using std::unique_ptr;
+using std::shared_ptr;
 using std::vector;
 using std::forward_list;
 using std::string;
@@ -24,6 +25,7 @@ using std::wstring;
 using std::thread;
 using std::for_each;
 
+typedef shared_ptr<float> StrPtrFloat;
 
 enum TEXTURE_RESOLUTION {RES_256, RES_512, RES_1024, RES_2048, UNSUPPORTED};
 
