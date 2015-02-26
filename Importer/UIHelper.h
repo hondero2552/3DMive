@@ -20,28 +20,22 @@ public:
     float GetOutlineWidth(void) const { return m_outline_width; }
 };
 
-static StrPtrFloat& createcircle(const float2& center, const float& _radius, const float outline_width)
+static void createcircle(const float2& center, const float& _radius, const float _outline_width, vector<float>& _outVertices, vector<unsigned short>& _outIndices)
 {
-    struct lCircleVertex
-    {
-        float2 mPosW;
-        float2 mUV;
-    };
-
     // calculate vertices
-    const uint CIRCUMFERENCE = static_cast<uint>(2 * PI_DOUBLE * _radius);
-    const uint VERTS_NUMBER = static_cast<uint>((CIRCUMFERENCE % 2 == 0 ? CIRCUMFERENCE : CIRCUMFERENCE + 1));// this ensures the vertices amount is always even
-    const double radians_interval = 2.0 / static_cast<double>(VERTS_NUMBER);
+    const uint CIRCUMFERENCE        = static_cast<uint>(2 * PI_DOUBLE * _radius);
+    const uint VERTS_NUMBER         = static_cast<uint>((CIRCUMFERENCE % 2 == 0 ? CIRCUMFERENCE : CIRCUMFERENCE + 1));// this ensures the vertices amount is always even
+    const double radians_interval   = 2.0 / static_cast<double>(VERTS_NUMBER);
 
     // Allocate the necessary memory to prevent std::vector from calling the expensive allocator function every time the vector increases in size
-    std::vector<lCircleVertex> vertices;
-    vertices.reserve(VERTS_NUMBER);
+    // each vertex has 4 floats; 2 floats for xy position and 2 floats for UV coordinate
+    _outVertices.reserve(VERTS_NUMBER * 4); 
 
     /* Generate the vertices for the circle in World-Space*/
     for (short circle = 1; circle < 3; ++circle)
     {
         double angle = 0.0;
-        const double lRadius = circle == 1 ? (_radius - outline_width) : _radius;
+        const double lRadius = circle == 1 ? (_radius - _outline_width) : _radius;
         for (size_t vertex_index = 0; vertex_index < VERTS_NUMBER; ++vertex_index)
         {
             // x/y coordinates for innner circle vertices
@@ -49,16 +43,14 @@ static StrPtrFloat& createcircle(const float2& center, const float& _radius, con
             const float yPosW = static_cast<float>(sin(angle) * (lRadius));
 
             // UV coordinates for inner circle
-            const float uTexCoord_World = xPosW == 0.0f ? (0.50f) : (xPosW < 0.0f ? 1.0f / (lRadius - abs(xPosW)) : 1.0f / (lRadius + xPosW));
-            const float vTexCoord_World = yPosW == 0.0f ? (0.50f) : (yPosW < 0.0f ? 1.0f / (lRadius + abs(xPosW)) : 1.0f / (lRadius - yPosW));
+            const float uTexCoord_World = xPosW == 0.0f ? (0.50f) : (xPosW < 0.0f ? 1.0f / ((float) lRadius - abs(xPosW)) : 1.0f / ((float) lRadius + xPosW));
+            const float vTexCoord_World = yPosW == 0.0f ? (0.50f) : (yPosW < 0.0f ? 1.0f / ((float) lRadius + abs(xPosW)) : 1.0f / ((float) lRadius - yPosW));
 
             // save the vertex
-            lCircleVertex lvertex;
-            lvertex.mPosW.u = xPosW;
-            lvertex.mPosW.v = yPosW;
-            lvertex.mUV.u   = uTexCoord_World;
-            lvertex.mUV.v   = vTexCoord_World;
-            vertices.push_back(lvertex);
+            _outVertices.push_back(xPosW);
+            _outVertices.push_back(yPosW);
+            _outVertices.push_back(uTexCoord_World);
+            _outVertices.push_back(vTexCoord_World);
 
             // next vertex
             angle += radians_interval;
@@ -66,24 +58,24 @@ static StrPtrFloat& createcircle(const float2& center, const float& _radius, con
     }
    
     /* Generate Indices */
-    vector<unsigned short> indices;
-    indices.reserve(VERTS_NUMBER * 3);
+    _outIndices.reserve(VERTS_NUMBER * 3);
     const unsigned short HALF_VERTICES = VERTS_NUMBER / 2;
     for (unsigned short i = 0; i < HALF_VERTICES; ++i)
     {
+        // we are looking at every 4 vertices as a rectangle and dividing that rectangle into 2 triangles so it can be drawn
         const unsigned short BOTTOM_RIGHT   = i;
         const unsigned short TOP_RIGHT      = i + HALF_VERTICES;
-        const unsigned short TOP_LEFT       = (TOP_RIGHT + 1 < (VERTS_NUMBER + 1)) ? (TOP_RIGHT + 1) : (HALF_VERTICES + 1);
+        const unsigned short TOP_LEFT       = (TOP_RIGHT + 1 < ((unsigned short)VERTS_NUMBER + 1)) ? (TOP_RIGHT + 1) : (HALF_VERTICES + 1);
         const unsigned short BOTTOM_LEFT    = (BOTTOM_LEFT + 1 < (HALF_VERTICES + 1)) ? BOTTOM_LEFT + 1 : 0;
 
-        // clockwise
-        indices.push_back(BOTTOM_RIGHT);
-        indices.push_back(BOTTOM_LEFT);
-        indices.push_back(TOP_LEFT);
+        // clockwise triangles that wil define the outline of the circle
+        _outIndices.push_back(BOTTOM_RIGHT);
+        _outIndices.push_back(BOTTOM_LEFT);
+        _outIndices.push_back(TOP_LEFT);
 
-        indices.push_back(BOTTOM_RIGHT);
-        indices.push_back(TOP_LEFT);
-        indices.push_back(TOP_RIGHT);
+        _outIndices.push_back(BOTTOM_RIGHT);
+        _outIndices.push_back(TOP_LEFT);
+        _outIndices.push_back(TOP_RIGHT);
     }
 }
 
