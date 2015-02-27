@@ -1610,8 +1610,13 @@ void RendererDx::AddUIElement(IUIElement* _ptrUIElement)
     const BUTTON_TYPE lType = _ptrUIElement->GetButtonType();
     if (lType == BUTTON_TYPE::ROUND_BUTTON)
     {
+        // get a pointer to the correct data type
+        RoundButton* lptrRoundButton = static_cast<RoundButton*>(_ptrUIElement);
         // Create the vertices; POS_W, UV-coordinates.
-
+        vector<float> lVertexPositions;
+        vector<unsigned short> lIndices;
+        //createcircle(lptrRoundButton->GetCenterPoint(), lptrRoundButton->GetRadius(), ) /*NEED OUTLINE WIDTH HERE*/
+        
         //
 
     }
