@@ -66,7 +66,7 @@ static void createcircle(const float2& center, const float& _radius, const float
         const unsigned short BOTTOM_RIGHT   = i;
         const unsigned short TOP_RIGHT      = i + HALF_VERTICES;
         const unsigned short TOP_LEFT       = (TOP_RIGHT + 1 < ((unsigned short)VERTS_NUMBER + 1)) ? (TOP_RIGHT + 1) : (HALF_VERTICES + 1);
-        const unsigned short BOTTOM_LEFT    = (BOTTOM_LEFT + 1 < (HALF_VERTICES + 1)) ? BOTTOM_LEFT + 1 : 0;
+        const unsigned short BOTTOM_LEFT = (BOTTOM_RIGHT + 1 < (HALF_VERTICES + 1)) ? BOTTOM_RIGHT + 1 : 0;
 
         // clockwise triangles that wil define the outline of the circle
         _outIndices.push_back(BOTTOM_RIGHT);
