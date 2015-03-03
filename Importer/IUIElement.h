@@ -133,8 +133,7 @@ public:
     static void SetWriteFactory(IDWriteFactory1* pFactoy);
 
     static ID2D1DeviceContext* GetContext(void) { return m_pContext; }    
-    void SetOutlineBrushSize(const float& size) { m_OutlineBrushSize = size; }
-    float GetOutlineBrushSize(void) const { return m_OutlineBrushSize; }
+    float GetOutlineWitdth(void) const { return m_OutlineBrushSize; }
     
     void RestoreToPreviousStatus(void);
     void MouseHoveringOnMe(bool yesORno);

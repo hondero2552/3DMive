@@ -1616,10 +1616,9 @@ void RendererDx::AddUIElement(IUIElement* _ptrUIElement)
         // Create the vertices; POS_W, UV-coordinates.
         vector<float> lVertexPositions;
         vector<unsigned short> lIndices;
-        createcircle(lptrRoundButton->GetCenterPoint(), lptrRoundButton->GetRadius(), lptrRoundButton->GetOutlineBrushSize(), lVertexPositions, lIndices);
+        createcircle(lptrRoundButton->GetCenterPoint(), lptrRoundButton->GetRadius(), lptrRoundButton->GetOutlineWitdth(), lVertexPositions, lIndices);
         
         //
-
     }
     else if (lType == BUTTON_TYPE::SQUARE_BUTTON)
     {

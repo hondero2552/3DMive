@@ -20,8 +20,9 @@ public:
     float GetOutlineWidth(void) const { return m_outline_width; }
 };
 
-static void createcircle(const float2& center, const float& _radius, const float _outline_width, vector<float>& _outVertices, vector<unsigned short>& _outIndices)
+static bool createcircle(const float2& center, const float& _radius, const float _outline_width, vector<float>& _outVertices, vector<unsigned short>& _outIndices)
 {
+    bool return_value = true;
     // calculate vertices
     const uint CIRCUMFERENCE        = static_cast<uint>(2 * PI_DOUBLE * _radius);
     const uint VERTS_NUMBER         = static_cast<uint>((CIRCUMFERENCE % 2 == 0 ? CIRCUMFERENCE : CIRCUMFERENCE + 1));// this ensures the vertices amount is always even
@@ -48,8 +49,8 @@ static void createcircle(const float2& center, const float& _radius, const float
 
             // save the vertex
             _outVertices.push_back(xPosW);
-            _outVertices.push_back(yPosW);
             _outVertices.push_back(uTexCoord_World);
+            _outVertices.push_back(yPosW);            
             _outVertices.push_back(vTexCoord_World);
 
             // next vertex
@@ -66,7 +67,7 @@ static void createcircle(const float2& center, const float& _radius, const float
         const unsigned short BOTTOM_RIGHT   = i;
         const unsigned short TOP_RIGHT      = i + HALF_VERTICES;
         const unsigned short TOP_LEFT       = (TOP_RIGHT + 1 < ((unsigned short)VERTS_NUMBER + 1)) ? (TOP_RIGHT + 1) : (HALF_VERTICES + 1);
-        const unsigned short BOTTOM_LEFT = (BOTTOM_RIGHT + 1 < (HALF_VERTICES + 1)) ? BOTTOM_RIGHT + 1 : 0;
+        const unsigned short BOTTOM_LEFT    = (BOTTOM_RIGHT + 1 < (HALF_VERTICES + 1)) ? BOTTOM_RIGHT + 1 : 0;
 
         // clockwise triangles that wil define the outline of the circle
         _outIndices.push_back(BOTTOM_RIGHT);
@@ -77,6 +78,8 @@ static void createcircle(const float2& center, const float& _radius, const float
         _outIndices.push_back(TOP_LEFT);
         _outIndices.push_back(TOP_RIGHT);
     }
+
+    return return_value;
 }
 
 static float4 getColor(const COLOR_NAME& color, const float& alpha = 1.0f)
@@ -85,9 +88,9 @@ static float4 getColor(const COLOR_NAME& color, const float& alpha = 1.0f)
     const uint greenShift = 8;
     const uint blueShift = 0;
 
-    const uint redMask = (0xff << redShift);
-    const uint greenMask = (0xff << greenShift);
-    const uint blueMask = (0xff << blueShift);
+    const uint redMask      = (0xff << redShift);
+    const uint greenMask    = (0xff << greenShift);
+    const uint blueMask     = (0xff << blueShift);
 
     const float R = static_cast<float>((color & redMask) >> redShift) / 255.0f;
     const float G = static_cast<float>((color & greenMask) >> greenShift) / 255.0f;
