@@ -15,6 +15,7 @@ using Microsoft::WRL::ComPtr;
 
 #if defined(DEBUG) || defined(_DEBUG)
 #include <Initguid.h>
+#include <debugapi.h>
 #include <dxgidebug.h>
 typedef HRESULT (WINAPI *GetDebugInterface)(REFIID riid, void **ppDebug);
 #endif

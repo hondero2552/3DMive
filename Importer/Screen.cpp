@@ -12,7 +12,7 @@ Screen::~Screen(void)
 
 void Screen::DrawElements(void)
 {
-    // Draw this screen and then draw my Buttons
+    // Draw this screen and then draw the screen buttons
     UIButtonBase::GetContext()->FillRoundedRectangle(m_roundedRect, m_blackTransparentBrush);
     for_each(m_UIElementsList.begin(), m_UIElementsList.end(), [&] (IUIElement* _ptr)
     {
@@ -81,12 +81,12 @@ bool Screen::InitializeScreen(float left, float right, float top, float bottom, 
     if(!m_pQuadrants)
         return false;
 
-    m_Rectangle.mleft       = m_screenAreaRect.left = left;
-    m_Rectangle.mright      = m_screenAreaRect.right= right;
-    m_Rectangle.mtop        = m_screenAreaRect.top  = top;
-    m_Rectangle.mbottom     = m_screenAreaRect.bottom = bottom;
+    m_Rectangle.mleft       = m_screenAreaRect.left     = left;
+    m_Rectangle.mright      = m_screenAreaRect.right    = right;
+    m_Rectangle.mtop        = m_screenAreaRect.top      = top;
+    m_Rectangle.mbottom     = m_screenAreaRect.bottom   = bottom;
     m_roundedRect.rect      = m_screenAreaRect;
-    m_roundedRect.radiusX   = m_roundedRect.radiusY = radius;
+    m_roundedRect.radiusX   = m_roundedRect.radiusY     = radius;
     
     m_transparency  = transparency;
     m_type          = screentType;
@@ -102,7 +102,7 @@ bool Screen::InitializeScreen(float left, float right, float top, float bottom, 
     return true;
 }
 
-UIBUTTON Screen::MouseClicked(int x, int y)
+UIBUTTON Screen::MouseClickedAt(int x, int y)
 {
     UIBUTTON button = UIBUTTON::NO_BUTTON;
 
@@ -117,7 +117,7 @@ UIBUTTON Screen::MouseClicked(int x, int y)
     return button;
 }
 
-UIBUTTON Screen::MouseButtonUp(int x, int y)
+UIBUTTON Screen::MouseButtonUpAt(int x, int y)
 {
     assert(m_pCurrentUIElement != nullptr);
     UIBUTTON button = UIBUTTON::NO_BUTTON;

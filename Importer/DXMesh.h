@@ -1,4 +1,6 @@
+#if defined(_WIN32)
 #pragma once
+#endif
 #include <forward_list>
 #include "DebugDX.h"
 #include "common_data_attributes.h"

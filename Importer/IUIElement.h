@@ -110,8 +110,7 @@ public:
         m_pBitmapBrush_PermanentlyActiveStatus(nullptr),
         m_pID2DTextLayout(nullptr),
         m_pChildScreen(nullptr),
-        m_type(BUTTON_TYPE::UNDEFINED)
-    {  }
+        m_type(BUTTON_TYPE::UNDEFINED){  }// default constructor ends
 
     // Destructor
     ~UIButtonBase(void) 
@@ -134,7 +133,7 @@ public:
 
     static ID2D1DeviceContext* GetContext(void) { return m_pContext; }    
     float GetOutlineWitdth(void) const { return m_OutlineBrushSize; }
-    
+    void SetOutlineBrushSize(const float& _outlineSize) { m_OutlineBrushSize = _outlineSize; }
     void RestoreToPreviousStatus(void);
     void MouseHoveringOnMe(bool yesORno);
     void MouseClickedMe(void);

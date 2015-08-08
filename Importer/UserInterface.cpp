@@ -293,9 +293,9 @@ void UserInterface::SetRenderTargetSize(int width, int height)
 }
 
 // Process user request or properly forward the message to the view
-UIBUTTON UserInterface::MouseButtonUp(int x, int y, uint quadrant)
+UIBUTTON UserInterface::MouseButtonUp(int x, int y)
 {
-    UIBUTTON clickedButton = UIBUTTON::OUTSIDE_SCREEN;                  ///////////////////////////////////////////////FIX THIS OUTSIDE_SCREEN may NEVER HAPPEN
+    UIBUTTON clickedButton = UIBUTTON::OUTSIDE_SCREEN;// OUTSIDE_SCREEN has no specific use here; It only serves as a variable initialzier
 
     // First check which screen has the mouse focus ( see MouseHoveringAt(x, y) ) and then test
     // if any of the screen's buttons was completely pressed. If the current screen has the mouse
@@ -305,7 +305,7 @@ UIBUTTON UserInterface::MouseButtonUp(int x, int y, uint quadrant)
         if(m_pBackArrow->isClicked() == false)
         {
             // check if the mouse was up on top of the button that was initially clicked
-            clickedButton = m_pCurrentScreen->MouseButtonUp(x, y);
+            clickedButton = m_pCurrentScreen->MouseButtonUpAt(x, y);
             IUIElement* pUIElement = m_pCurrentScreen->GetCurrentUIElement();
 
             // if it was, the current UIElement of the screen will be set to that button
@@ -332,27 +332,23 @@ UIBUTTON UserInterface::MouseButtonUp(int x, int y, uint quadrant)
         else
         {
             m_pBackArrow->UnclickedMe();
-            if(m_pBackArrow->IsInsideElement(x, y))
-            {
-                clickedButton = m_pBackArrow->GetButton();
-            }
+            if(m_pBackArrow->IsInsideElement(x, y))            
+                clickedButton = m_pBackArrow->GetButton();            
             else
             {
-                m_pBackArrow->RestoreToPreviousStatus();
+                m_pBackArrow->RestoreToPreviousStatus();// This happens when the user initially clicked a button but did not finish the clicking button process on top of the button
                 m_pBackArrow->MouseHoveringOnMe(false);
             }
         }
     }
-    else if(m_pContextMenuScreen->HasMouseFocus())
-    {
-        clickedButton = m_pContextMenuScreen->MouseButtonUp(x, y);        
-    }
+    else if(m_pContextMenuScreen->HasMouseFocus())    
+        clickedButton = m_pContextMenuScreen->MouseButtonUpAt(x, y);            
 
-    switch (clickedButton)
+    switch (clickedButton)// Which UI Button the user selected
     {
     case IMPORTMESH:
         GetInputFileName();
-        MouseHoveringAt(x, y, quadrant);
+        MouseHoveringAt(x, y);
         {
             Screen* ptr = m_pCurrentScreen->GetParentScreen();
             if(ptr)
@@ -367,7 +363,7 @@ UIBUTTON UserInterface::MouseButtonUp(int x, int y, uint quadrant)
         }
         break;
     case NO_BUTTON:
-        MouseHoveringAt(x, y, NULL);
+        MouseHoveringAt(x, y);
         break;
     case UIBUTTON::SHOWHIDECONTEXTMENU:
         m_pContextMenuScreen->IsHidden() ? m_pContextMenuScreen->ShowScreen() : m_pContextMenuScreen->HideScreen();
@@ -565,7 +561,7 @@ void UserInterface::CreateMainScreen(void)
 
             // Effects
             // ImportExportButton->SetOutlineBrushSize(F_BRUSH_SIZE);
-            ImportExportButton->SetOutlineBrushSize(4.0f);
+            ImportExportButton->SetOutlineBrushSize(6.0f);
             ImportExportButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
             ImportExportButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
             ImportExportButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
@@ -1225,10 +1221,8 @@ void UserInterface::CreateContexMenu(void)
     m_pBackArrow = Back_Arrow;
 }
 
-void UserInterface::MouseHoveringAt(int x, int y, uint quadrant) 
+void UserInterface::MouseHoveringAt(int x, int y) // This function tracks where the mouse is at ALL times
 {
-    // Track where the mouse is at all times
-
     // First check if the mouse is still inside the current screen
     UIBUTTON button = m_pCurrentScreen->MouseHoveringAt(x, y);
 
@@ -1246,20 +1240,17 @@ void UserInterface::MouseHoveringAt(int x, int y, uint quadrant)
 
             // if it is inside the context menu Capture the Mouse
             // else release the mouse in case it was previously caught/inside the context menu screen            
-            if(button != UIBUTTON::OUTSIDE_SCREEN)
-            {
+            if(button != UIBUTTON::OUTSIDE_SCREEN)            
                 m_pContextMenuScreen->CaptureMouse();
-            }
-            else
-            {
-                m_pContextMenuScreen->ReleaseMouse();
-            }
+            
+            else            
+                m_pContextMenuScreen->ReleaseMouse();            
         }
     }
     // Else if it still is inside the current screen check
     else
     {
-        // first capture the mouse
+        // first capture the mouse -> By capturing the mouse we ensure that if there is a click the screen process it instead of the mesh engine
         m_pCurrentScreen->CaptureMouse();
 
         // if the mouse is inside the current screen but it is not hovering on any specific button
@@ -1268,25 +1259,22 @@ void UserInterface::MouseHoveringAt(int x, int y, uint quadrant)
             // then check if it's hovering inside the back button arraow, which doesn't belong to any screen
 
             // if it is hovering on the back-arrow button then send the button the message
-            if(m_pBackArrow->IsInsideElement(x, y))
-            {
+            if(m_pBackArrow->IsInsideElement(x, y))            
                 m_pBackArrow->MouseHoveringOnMe(true);
-            }
+            
             // if it's not then make sure the button still receives a message letting it know in case it was previously tracking the mouse as being on top of it
-            else
-            {
+            else            
                 m_pBackArrow->MouseHoveringOnMe(false);
-            }
         }
     }
 }
 
-UIBUTTON UserInterface::MouseClick(int x, int y, uint quadrant) 
+UIBUTTON UserInterface::MouseClickAt(int x, int y) 
 {
     UIBUTTON button = UIBUTTON::NO_BUTTON;
     if(m_pCurrentScreen->HasMouseFocus())
     {
-        button = m_pCurrentScreen->MouseClicked(x, y);
+        button = m_pCurrentScreen->MouseClickedAt(x, y);
         if(button == UIBUTTON::NO_BUTTON)
         {
             if(m_pBackArrow->IsInsideElement(x, y))
@@ -1298,7 +1286,7 @@ UIBUTTON UserInterface::MouseClick(int x, int y, uint quadrant)
     }
     else if(m_pContextMenuScreen->HasMouseFocus())
     {
-        button = m_pContextMenuScreen->MouseClicked(x, y);
+        button = m_pContextMenuScreen->MouseClickedAt(x, y);
     }
     return button;
 }
@@ -1748,52 +1736,48 @@ void UserInterface::EditMaterialChannel(const IUIElement* _PSBChannel, UIBUTTON 
     assert((_channel == RED_CHANNEL) || (_channel == BLUE_CHANNEL) || (_channel == GREEN_CHANNEL) || (_channel == ALPHA_CHANNEL) || (_channel == SPECULAR_FACTOR));
 
     // Only get a float4 pointer if it's not the alpha channel deing edited
-    float4* f4 = nullptr;
+    float4* ptrColor = nullptr;
     if(_channel != UIBUTTON::ALPHA_CHANNEL)
     {
         switch (m_MaterialTermBeingEdited)
         {
         case AMBIENT_TERM:
-            f4 = &(m_MaterialBeingEdited->Ambient);
+            ptrColor = &(m_MaterialBeingEdited->Ambient);
             break;
         case DIFFUSE_TERM:
-            f4 = &(m_MaterialBeingEdited->Diffuse);
+            ptrColor = &(m_MaterialBeingEdited->Diffuse);
             break;
         case SPECULAR_TERM:
-            f4 = &(m_MaterialBeingEdited->Specular);
+            ptrColor = &(m_MaterialBeingEdited->Specular);
             break;
         }
     }
     else
-        f4 = &(m_MaterialBeingEdited->Diffuse);
+        ptrColor = &(m_MaterialBeingEdited->Diffuse);
 
     // RGB
-    float* f = nullptr;
+    float* ptrColorChannel = nullptr;
     switch (_channel)
     {
     case UIBUTTON::ALPHA_CHANNEL:
     case UIBUTTON::SPECULAR_FACTOR:
-        f = &(f4->w);
+        ptrColorChannel = &(ptrColor->w);
         break;
     case UIBUTTON::RED_CHANNEL:
-        f = &(f4->x);
-        break;
-    case UIBUTTON::BLUE_CHANNEL:
-        f = &(f4->z);
+        ptrColorChannel = &(ptrColor->x);
         break;
     case UIBUTTON::GREEN_CHANNEL:
-        f = &(f4->y);
+        ptrColorChannel = &(ptrColor->y);
         break;
+    case UIBUTTON::BLUE_CHANNEL:
+        ptrColorChannel = &(ptrColor->z);
+        break;    
     }
 
     const ScrollBar* ptr = reinterpret_cast<const ScrollBar*>(_PSBChannel);
     const int current_value  = ptr->GetCurrentValue();
-    if(_channel == UIBUTTON::SPECULAR_FACTOR)
-    {
-        *f = static_cast<float>((4 * current_value));
-    }
-    else
-    {
-        *f = static_cast<float>(current_value/100.0f);
-    }
+    if(_channel == UIBUTTON::SPECULAR_FACTOR)    
+        *ptrColorChannel = static_cast<float>((4 * current_value));
+    else    
+        *ptrColorChannel = static_cast<float>(current_value / 100.0f);
 }

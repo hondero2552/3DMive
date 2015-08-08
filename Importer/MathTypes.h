@@ -12,10 +12,9 @@
 namespace omi
 {
     //Constants
-    const float PI          = 3.141592654f;
-    const double PI_DOUBLE  = 3.14159265358979323;
-    const float PI_OVER_TWO = PI/2.0f;
-    const float TWO_PI      = 2.0f * PI;
+    const double PI         = 3.14159265358979323;
+    const float PI_OVER_TWO = static_cast<float>(PI)/2.0f;
+    const float TWO_PI      = 2.0f * static_cast<float>(PI);
     const float SQUARE_SIZE_INCHES = 1.5f;
 
     //Structures

@@ -122,9 +122,9 @@ public:
     void SetCurrentScreen(Screen& pScreen);
     void SetTraingleCount(uint count);
     //
-    void MouseHoveringAt(int x, int y, uint quadrant);
-    UIBUTTON MouseClick(int x, int y, uint quadrant);
-    UIBUTTON MouseButtonUp(int x, int y, uint quadrant);
+    void MouseHoveringAt(int x, int y);
+    UIBUTTON MouseClickAt(int x, int y);
+    UIBUTTON MouseButtonUp(int x, int y);
     
     int GetCameraSpeedValue(void);
     int GetCameraZoomSpeed(void);

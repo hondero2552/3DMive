@@ -55,8 +55,8 @@ public:
     void AddUIElement(IUIElement* ptrUIEle);
 
     // User Interaction
-    UIBUTTON MouseClicked(int x, int y);
-    UIBUTTON MouseButtonUp(int x, int y);
+    UIBUTTON MouseClickedAt(int x, int y);
+    UIBUTTON MouseButtonUpAt(int x, int y);
     UIBUTTON MouseHoveringAt(int x, int y);
 
     void DumpUIElements(void);

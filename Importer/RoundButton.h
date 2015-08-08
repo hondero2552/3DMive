@@ -30,6 +30,5 @@ public:
     void DrawMe();
 
     void RePositionElement(D2D1_POINT_2F& _newTopLeft);
-    
 };
 #endif

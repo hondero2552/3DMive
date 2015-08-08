@@ -31,8 +31,8 @@ namespace omi
     template <typename T>
     T GetPercentage(const T& value, uint percent) { return( (value) * (percent/100.0f)); }
     // Convertion operations
-    inline float MLConvertToRadians(float fDegrees) { return fDegrees * (PI / 180.0f); }
-    inline float XMConvertToDegrees(float fRadians) { return fRadians * (180.0f / PI); }
+    inline float MLConvertToRadians(float fDegrees) { return fDegrees * (static_cast<float>(PI) / 180.0f); }
+    inline float XMConvertToDegrees(float fRadians) { return fRadians * (180.0f / static_cast<float>(PI)); }
 
     //-----------------------------------------------------------------------------------------------
     //4D-Vector Operations

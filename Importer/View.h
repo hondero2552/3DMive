@@ -57,9 +57,9 @@ public:
     bool CreateRenderTargets(const HWND& hwnd, int width, int height);
     inline float2  GetDPI(void) { return m_pUserInterface->GetDPI(); }
 
-    inline void MouseHoveringAt(int x, int y, uint quadrant) { m_pUserInterface->MouseHoveringAt(x, y, quadrant); }
-    inline UIBUTTON MouseClick(int x, int y, uint quadrant) { return m_pUserInterface->MouseClick(x, y, quadrant); }
-    inline UIBUTTON MouseButtonUp(int x, int y, uint quadrant) { return m_pUserInterface->MouseButtonUp(x, y, quadrant); }
+    inline void MouseHoveringAt(int x, int y) { m_pUserInterface->MouseHoveringAt(x, y); }
+    inline UIBUTTON MouseClickAt(int x, int y) { return m_pUserInterface->MouseClickAt(x, y); }
+    inline UIBUTTON MouseButtonUp(int x, int y) { return m_pUserInterface->MouseButtonUp(x, y); }
 
     inline void ShowNormals(void) { m_pRenderer->ShowNormals(); }
     inline void ShowGrid(void) { m_pRenderer->ShowWorldGrid(); }

@@ -1616,7 +1616,8 @@ void RendererDx::AddUIElement(IUIElement* _ptrUIElement)
         // Create the vertices; POS_W, UV-coordinates.
         vector<float> lVertexPositions;
         vector<unsigned short> lIndices;
-        createcircle(lptrRoundButton->GetCenterPoint(), lptrRoundButton->GetRadius(), lptrRoundButton->GetOutlineWitdth(), lVertexPositions, lIndices);
+        vector<unsigned short> lIndicesInnerCircle;
+        createcircle(lptrRoundButton->GetCenterPoint(), lptrRoundButton->GetRadius(), lptrRoundButton->GetOutlineWitdth(), lVertexPositions, lIndices, lIndicesInnerCircle);
         
         //
     }
