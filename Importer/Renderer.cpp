@@ -1321,7 +1321,7 @@ void RendererDx::CreateGrid(float x, float z)
 {
     const float Xc = x / 10;
     const float Zc = z / 10;
-    const float yOffset = -0.4f; // So the grid would be JUST below the (0,0,0) origin and below the xy-plane
+    const float yOffset = -0.4f; // So the grid would be JUST below the (0,0,0) origin and below the xz-plane
 
     vector<float3> points;
     points.reserve(76);
@@ -1435,7 +1435,7 @@ void RendererDx::WireFrameMode(void)
 
     assert(SUCCEEDED(hr));
 
-    // No need to set the state to the pipeline as the DrawScene function will do this evert frame
+    // No need to set the state to the pipeline as the DrawScene function will do this every frame
 }
 
 void RendererDx::BackFaceCulling(void)
@@ -1526,7 +1526,7 @@ void RendererDx::StopFollowingCamera(void)
     float2 headandpitch = m_pCamera->GetHeadandPitch();
     m_lightHead = headandpitch.u + MLConvertToRadians(180);
     m_lightPitch = -headandpitch.v;
-    MoveLight(0, 0);
+    MoveLight(0, 0);// This function is placed here because movelight does more than just move the light
 }
 
 Material& RendererDx::GetMaterial(const wstring& _material_name)

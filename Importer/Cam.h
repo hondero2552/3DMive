@@ -3,7 +3,7 @@
 using namespace omi;
 const float NEAR_PLANE = 0.01f;
 const float FAR_PLANE = 10000.0f;
-const float CLOSE_TO_90 = MLConvertToRadians(89.0);
+const float CLOSE_TO_90 = MLConvertToRadians(89.5);
 
 class Camera_FP
 {

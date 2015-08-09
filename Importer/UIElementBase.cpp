@@ -18,10 +18,9 @@ void UIButtonBase::SetPermanentlyActiveEffect(ACTIVE_EFFECT effect, const D2D1_C
     assert(effect != ACTIVE_EFFECT::NOPERMANENTSTATUS);
 
     m_effectActive = effect;
-    if(effect == DRAWMASK_A)
-    {
+    if(effect == DRAWMASK_A)    
         m_BrushColor_active = _optional_Brush;
-    }
+    
 }
 
 void UIButtonBase::SetHoveringEffect(HOVERING_EFFECT effect, const D2D1_COLOR_F& _optional_Brush)
@@ -29,14 +28,11 @@ void UIButtonBase::SetHoveringEffect(HOVERING_EFFECT effect, const D2D1_COLOR_F&
     assert(effect != HOVERING_EFFECT::NOHOVERINGEFFECT);
 
     m_effectHovering = effect;
-    if(effect == HOVERING_EFFECT::DRAWMASK_H || effect == HOVERING_EFFECT::DRAWOUTLINE_H)
-    {
+    if(effect == HOVERING_EFFECT::DRAWMASK_H || effect == HOVERING_EFFECT::DRAWOUTLINE_H)    
         m_BrushColor_hovering = _optional_Brush;
-    }
-    else if( effect == HOVERING_EFFECT::CHANGEBITMAP_H)
-    {
-        assert(m_pBitmapBrush_MouseHoveringStatus);
-    }
+    
+    else if( effect == HOVERING_EFFECT::CHANGEBITMAP_H)// This doesn't look rigth    
+        assert(m_pBitmapBrush_MouseHoveringStatus);    
 }
 
 void UIButtonBase::SetClickedEffect(CLICKED_EFFECT effect, const D2D1_COLOR_F& _optional_Brush)
@@ -44,10 +40,8 @@ void UIButtonBase::SetClickedEffect(CLICKED_EFFECT effect, const D2D1_COLOR_F& _
     assert(effect != CLICKED_EFFECT::NOCLICKEDEFFECT);
 
     m_effectClicked = effect;
-    if(effect == CLICKED_EFFECT::DRAWMASK_C)
-    {
-        m_BrushColor_clicked = _optional_Brush;
-    }
+    if(effect == CLICKED_EFFECT::DRAWMASK_C)    
+        m_BrushColor_clicked = _optional_Brush;    
 }
 
 void UIButtonBase::SetDefaultEffect(DEFAULT_EFFECT effect, const D2D1_COLOR_F& _optional_Brush)
@@ -55,10 +49,8 @@ void UIButtonBase::SetDefaultEffect(DEFAULT_EFFECT effect, const D2D1_COLOR_F& _
     assert(effect != DEFAULT_EFFECT::NODEFAULTEFFECT);
 
     m_effectDefault = effect;
-    if(effect == DEFAULT_EFFECT::DRAWMASK_D || effect == DEFAULT_EFFECT::DRAWOUTLINE_D)
-    {
-        m_BrushColor_default = _optional_Brush;
-    }
+    if(effect == DEFAULT_EFFECT::DRAWMASK_D || effect == DEFAULT_EFFECT::DRAWOUTLINE_D)    
+        m_BrushColor_default = _optional_Brush;    
 }
 
 void UIButtonBase::MouseClickedMe(void)
@@ -87,19 +79,15 @@ void UIButtonBase::MouseButtonUp(void)
         {
             m_bImPermanentlyActive = true;
             // if the permanently active effect is to change the bitmap then set it as appropriately
-            if(m_effectActive == ACTIVE_EFFECT::CHANGEBITMAP_A)
-            {
-                m_pBitmapBrush_Current = m_pBitmapBrush_PermanentlyActiveStatus;
-            }
+            if(m_effectActive == ACTIVE_EFFECT::CHANGEBITMAP_A)            
+                m_pBitmapBrush_Current = m_pBitmapBrush_PermanentlyActiveStatus;            
         }
         else
         {
             m_bImPermanentlyActive = false;
             // if the permanently active effect is to change the bitmap then set the default bitmap status again
-            if(m_effectActive == ACTIVE_EFFECT::CHANGEBITMAP_A)
-            {
-                m_pBitmapBrush_Current = m_pBitmapBrush_DefaultStatus;
-            }
+            if(m_effectActive == ACTIVE_EFFECT::CHANGEBITMAP_A)            
+                m_pBitmapBrush_Current = m_pBitmapBrush_DefaultStatus;            
         }
     }
     // If it doesn't then just set the default-status bitmap as the current bitmap
@@ -127,10 +115,9 @@ void UIButtonBase::MouseHoveringOnMe(bool yesORno)
     {
         // if the mouse is not hovering on me anymore then restore the
         // current bitmap to the status before the mouse was hovering over it
-        if(m_effectHovering == CHANGEBITMAP_H)
-        {
+        if(m_effectHovering == CHANGEBITMAP_H)        
             RestoreToPreviousStatus();
-        }
+        
     }
 }
 
@@ -139,14 +126,10 @@ void UIButtonBase::SaveCurrentStatus(void)
     // Check if the button is in its default status or is permanently active
     // and save the status as appropriate
     // NOTE: ONLY defautl and Permanently-Active statuses are supported, mouse-hovering is not a status.
-    if(m_pBitmapBrush_Current == m_pBitmapBrush_DefaultStatus)
-    {
-        m_previousStatus = BUTTON_STATUS::DEFAULT;
-    }
-    else
-    {
+    if(m_pBitmapBrush_Current == m_pBitmapBrush_DefaultStatus)    
+        m_previousStatus = BUTTON_STATUS::DEFAULT;    
+    else    
         m_previousStatus = BUTTON_STATUS::PERMANENTLYACTIVE;
-    }
 }
 
 void UIButtonBase::RestoreToPreviousStatus(void)
@@ -187,7 +170,7 @@ void UIButtonBase::SetClickedStatusBitmap(ID2D1BitmapBrush* Bitmap)
     m_pBitmapBrush_ClickedStatus->SetTransform(m_Trasnform);
 }
 
-void UIButtonBase::ResetTrasform(void)
+void UIButtonBase::ResetTrasform(void)// Do I really need to transform every brush?
 {
     m_SolidColorBrush_UseAll->SetTransform(m_Trasnform);
     m_pBitmapBrush_DefaultStatus->SetTransform(m_Trasnform);

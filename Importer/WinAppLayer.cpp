@@ -318,7 +318,7 @@ LRESULT WinAppLayer::WinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
         mouseClickedUIButton = false;
         mouse_x = mouse_y = 0;
 
-        if (mouseIsCaptured)
+        if (mouseIsCaptured)// If the mouse was captured with the BUTTONDOWN event we need to release it
         {
             mouseIsCaptured = false;
             ReleaseCapture();

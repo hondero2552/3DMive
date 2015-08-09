@@ -6,23 +6,23 @@
 #include "ScrollBar.h"
 #include "View.h"
 
-const FILE_FORMAT FILE_FORMATS_ARRAY [4] = {FILE_FORMAT::OBJ, FILE_FORMAT::FBX, FILE_FORMAT::HND, FILE_FORMAT::OBJE };
+const FILE_FORMAT FILE_FORMATS_ARRAY[4] = { FILE_FORMAT::OBJ, FILE_FORMAT::FBX, FILE_FORMAT::HND, FILE_FORMAT::OBJE };
 
 UserInterface::UserInterface(void) : m_iWidth(0), m_iHeight(0), m_iPotentialFPS(0), m_frameCount(0), m_hwnd(0), m_bMouseIsCaptured(false),
-    m_pD2DDevice(nullptr),
-    m_pD2DContext(nullptr),
-    m_pD2DFactory(nullptr),
-    m_pWicImagingFactory(nullptr),
-    m_pD2DTargetBitmap(nullptr),
-    m_pTextFormat(nullptr),
-    m_pDWriteFactory(nullptr),
-    m_pTextBrush(nullptr),
-    m_pBackArrow(nullptr),
-    m_dlg_OpenFile(nullptr), m_dlg_SaveFile(nullptr), m_pIView(nullptr), m_pCurrentScreen(nullptr), m_pMaterialsScreen(nullptr),
-    m_MaterialBeingEdited(nullptr),
-    m_iTriangleCount(0),
-    m_iCameraMovementSpeed(1), m_iCameraZoomSpeed(1),
-    m_dpiX(96.0f), m_dpiY(96.0f)
+m_pD2DDevice(nullptr),
+m_pD2DContext(nullptr),
+m_pD2DFactory(nullptr),
+m_pWicImagingFactory(nullptr),
+m_pD2DTargetBitmap(nullptr),
+m_pTextFormat(nullptr),
+m_pDWriteFactory(nullptr),
+m_pTextBrush(nullptr),
+m_pBackArrow(nullptr),
+m_dlg_OpenFile(nullptr), m_dlg_SaveFile(nullptr), m_pIView(nullptr), m_pCurrentScreen(nullptr), m_pMaterialsScreen(nullptr),
+m_MaterialBeingEdited(nullptr),
+m_iTriangleCount(0),
+m_iCameraMovementSpeed(1), m_iCameraZoomSpeed(1),
+m_dpiX(96.0f), m_dpiY(96.0f)
 {
 
 }
@@ -32,33 +32,33 @@ UserInterface::~UserInterface(void)
     SaveUserSettingsToFile();
 
     // Release the file dialogs
-    SAFE_RELEASE_COM( m_dlg_OpenFile);
-    SAFE_RELEASE_COM( m_dlg_SaveFile);
+    SAFE_RELEASE_COM(m_dlg_OpenFile);
+    SAFE_RELEASE_COM(m_dlg_SaveFile);
 
     // Delete all the Meshes
     EmptyMeshList();
-    SAFE_DELETE( m_pBackArrow );
+    SAFE_DELETE(m_pBackArrow);
 
     // Release the static memory from the scroll bar
-    ScrollBar* ptr = reinterpret_cast<ScrollBar*>( m_pCameraMovementSpeedSB );
+    ScrollBar* ptr = reinterpret_cast<ScrollBar*>(m_pCameraMovementSpeedSB);
     ptr->ReleaseStaticMemory();
 
     // Delete all the Screens
-    for_each(m_ScreensList.begin(), m_ScreensList.end(), [&] (Screen* _ptr)
+    for_each(m_ScreensList.begin(), m_ScreensList.end(), [&](Screen* _ptr)
     {
-        SAFE_DELETE( _ptr );
+        SAFE_DELETE(_ptr);
     });
 
     // Release DirectX2D Variables
-    SAFE_RELEASE_COM( m_pTextBrush );
-    SAFE_RELEASE_COM( m_pDWriteFactory );
-    SAFE_RELEASE_COM( m_pTextFormat );
-    SAFE_RELEASE_COM( m_pD2DTargetBitmap );
-    SAFE_RELEASE_COM( m_pD2DContext );
-    SAFE_RELEASE_COM( m_pD2DDevice );
-    SAFE_RELEASE_COM( m_pD2DFactory );
+    SAFE_RELEASE_COM(m_pTextBrush);
+    SAFE_RELEASE_COM(m_pDWriteFactory);
+    SAFE_RELEASE_COM(m_pTextFormat);
+    SAFE_RELEASE_COM(m_pD2DTargetBitmap);
+    SAFE_RELEASE_COM(m_pD2DContext);
+    SAFE_RELEASE_COM(m_pD2DDevice);
+    SAFE_RELEASE_COM(m_pD2DFactory);
 
-    SAFE_RELEASE_COM( m_pWicImagingFactory );
+    SAFE_RELEASE_COM(m_pWicImagingFactory);
 
     // Release the COM Library
     CoUninitialize();
@@ -85,9 +85,9 @@ bool UserInterface::InitD2DDevices(IView* pview, IDXGIDevice2* d3dDevice)
     // Create text fonts factory
     hr = DWriteCreateFactory(DWRITE_FACTORY_TYPE_SHARED, __uuidof(m_pDWriteFactory), reinterpret_cast<IUnknown **>(&m_pDWriteFactory));
 
-    if(SUCCEEDED(hr))
+    if (SUCCEEDED(hr))
         hr = m_pDWriteFactory->CreateTextFormat(L"Consolas", nullptr, DWRITE_FONT_WEIGHT_NORMAL, DWRITE_FONT_STYLE_NORMAL, DWRITE_FONT_STRETCH_NORMAL, 14.0f, L"", &m_pTextFormat);
-    
+
 
     // This will always need to be done before anything else
     UIButtonBase::SetContext(m_pD2DContext);
@@ -108,14 +108,14 @@ bool UserInterface::InitD2DDevices(IView* pview, IDXGIDevice2* d3dDevice)
         const char* FILEBUFFER = OpenFile(wzFile.c_str(), fileLength, L"rb");
 
         // Only change the default values if the user has used the program before
-        if(FILEBUFFER)
+        if (FILEBUFFER)
         {
             LoadSettingsFromFile(FILEBUFFER, fileLength);
         }
 
         // Free used memory
         CoTaskMemFree(szUserAppLocal_path);
-        SAFE_DELETE_ARRAY( FILEBUFFER );
+        SAFE_DELETE_ARRAY(FILEBUFFER);
     }
 
     return true;
@@ -125,8 +125,8 @@ bool UserInterface::InitRenderTarget(const HWND& hwnd, IDXGISwapChain1* pSwapCha
 {
     m_hwnd = hwnd;
     // Initialize the COM Library
-    HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED  | COINIT_SPEED_OVER_MEMORY | COINIT_DISABLE_OLE1DDE);
-    if( !SUCCEEDED(hr) )
+    HRESULT hr = CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_SPEED_OVER_MEMORY | COINIT_DISABLE_OLE1DDE);
+    if (!SUCCEEDED(hr))
     {
         return false;                                                   // ADD DEBUG MESSAGE
     }
@@ -154,15 +154,15 @@ bool UserInterface::InitRenderTarget(const HWND& hwnd, IDXGISwapChain1* pSwapCha
 
 float2 UserInterface::GetDPI(void)
 {
-    m_pD2DFactory->GetDesktopDpi(&m_dpiX, &m_dpiY);    
+    m_pD2DFactory->GetDesktopDpi(&m_dpiX, &m_dpiY);
     return float2(m_dpiX, m_dpiY);
 }
 
 bool UserInterface::InitDeviceDepentResources(void)
 {
     // Initialize the WIC factory so we can create D2DBitmaps from image files
-    HRESULT hr = CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, (LPVOID*)&m_pWicImagingFactory);
-    if(FAILED(hr))
+    HRESULT hr = CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, (LPVOID*) &m_pWicImagingFactory);
+    if (FAILED(hr))
     {
         m_pIView->PrintMessage(UI_MSG_TYPE::CRITICAL_ERROR, L"There was a problem initializing the WIC Imaging factory. Program excution cannot continue.");
         return false;
@@ -184,10 +184,10 @@ bool UserInterface::InitDeviceDepentResources(void)
     return true;
 }
 
-void UserInterface::SetCurrentFPS(int fps) 
-{ 
+void UserInterface::SetCurrentFPS(int fps)
+{
     m_iCurrentFPS = fps;
-    std::wostringstream ws; 
+    std::wostringstream ws;
     ws << L"FPS: " << m_iCurrentFPS;
     m_pTextLayoutFPS = CreateTextLayout(m_pDWriteFactory, ws.str(), UI_STATS_FONT_SIZE);
 }
@@ -196,11 +196,11 @@ void UserInterface::SetPotentialFPS(int potentialFPS)
 {
     m_iPotentialFPS = potentialFPS;
 
-    std::wostringstream ws; ws << L"Potential fps: " << m_iPotentialFPS;    
+    std::wostringstream ws; ws << L"Potential fps: " << m_iPotentialFPS;
     m_pTextLayoutPotentialFPS = CreateTextLayout(m_pDWriteFactory, ws.str(), UI_STATS_FONT_SIZE);
 }
 
-void UserInterface::SetTraingleCount(uint count) 
+void UserInterface::SetTraingleCount(uint count)
 {
     m_iTriangleCount = count;
 
@@ -209,20 +209,20 @@ void UserInterface::SetTraingleCount(uint count)
 }
 
 void UserInterface::SetMeshAABB(const AABB& _aabb)
-{    
-    const float length  = _aabb.m_highest.z - _aabb.m_lowest.z;
-    const float width   = _aabb.m_highest.x - _aabb.m_lowest.x;
-    const float height  = _aabb.m_highest.y - _aabb.m_lowest.y;
+{
+    const float length = _aabb.m_highest.z - _aabb.m_lowest.z;
+    const float width = _aabb.m_highest.x - _aabb.m_lowest.x;
+    const float height = _aabb.m_highest.y - _aabb.m_lowest.y;
 
-    std::wostringstream ws; ws 
+    std::wostringstream ws; ws
         << L"Mesh length(z-axis): " << length;
     m_pTextLayoutMeshLength = CreateTextLayout(m_pDWriteFactory, ws.str(), UI_STATS_FONT_SIZE);
 
-    std::wostringstream ws1;ws1 
+    std::wostringstream ws1; ws1
         << L"Mesh width (x-axis): " << width;
     m_pTextLayoutMeshWidth = CreateTextLayout(m_pDWriteFactory, ws1.str(), UI_STATS_FONT_SIZE);
 
-    std::wostringstream ws2; ws2 
+    std::wostringstream ws2; ws2
         << L"Mesh height(y-axis): " << height;
     m_pTextLayoutMeshHeight = CreateTextLayout(m_pDWriteFactory, ws2.str(), UI_STATS_FONT_SIZE);
 }
@@ -232,8 +232,8 @@ void UserInterface::DrawScene(void)
     m_pD2DContext->BeginDraw();
 
     m_pCurrentScreen->DrawElements();
-    
-    if(!m_pContextMenuScreen->IsHidden())
+
+    if (!m_pContextMenuScreen->IsHidden())
         m_pContextMenuScreen->DrawElements();
 
     // Draw frame statistics, i.e. FPS, Potential-FPS, Triangle Count, handedness
@@ -243,28 +243,28 @@ void UserInterface::DrawScene(void)
         point.x = 1.0f;// This is to align the text from the left as well as separate it from the window border
 
         // Draw FPS
-        if(m_pTextLayoutFPS) // When will this NOT be true?
+        if (m_pTextLayoutFPS) // When will this NOT be true?
         {
             point.y = 1.0f;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutFPS.Get(), m_iCurrentFPS >= 60 ? m_pTextBrush : m_pTextBrushRed.Get());
         }
 
         // Draw Potential-FPS
-        if(m_pTextLayoutPotentialFPS)
+        if (m_pTextLayoutPotentialFPS)
         {
             point.y += VERTICAL_SEPARATION_FACTOR;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutPotentialFPS.Get(), m_pTextBrush);
         }
 
         // Draw the coordinate system info
-        if(m_pTextLayoutCorrdinateSystem)
+        if (m_pTextLayoutCorrdinateSystem)
         {
             point.y += VERTICAL_SEPARATION_FACTOR;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutCorrdinateSystem.Get(), m_pTextBrush);
         }
 
         // Draw The Triangle Count
-        if(m_pTextLayoutTriangleCount && m_iTriangleCount > 0)
+        if (m_pTextLayoutTriangleCount && m_iTriangleCount > 0)
         {
             point.y += VERTICAL_SEPARATION_FACTOR;
             m_pD2DContext->DrawTextLayout(point, m_pTextLayoutTriangleCount.Get(), m_pTextBrush);
@@ -288,8 +288,8 @@ void UserInterface::DrawScene(void)
 
 void UserInterface::SetRenderTargetSize(int width, int height)
 {
-    m_iWidth    = width;
-    m_iHeight   = height;
+    m_iWidth = width;
+    m_iHeight = height;
 }
 
 // Process user request or properly forward the message to the view
@@ -300,9 +300,9 @@ UIBUTTON UserInterface::MouseButtonUp(int x, int y)
     // First check which screen has the mouse focus ( see MouseHoveringAt(x, y) ) and then test
     // if any of the screen's buttons was completely pressed. If the current screen has the mouse
     // focus then don't forget to test the BackArrow button which does not belong to any screen
-    if(m_pCurrentScreen->HasMouseFocus())
+    if (m_pCurrentScreen->HasMouseFocus())
     {
-        if(m_pBackArrow->isClicked() == false)
+        if (m_pBackArrow->isClicked() == false)
         {
             // check if the mouse was up on top of the button that was initially clicked
             clickedButton = m_pCurrentScreen->MouseButtonUpAt(x, y);
@@ -310,10 +310,10 @@ UIBUTTON UserInterface::MouseButtonUp(int x, int y)
 
             // if it was, the current UIElement of the screen will be set to that button
             // else it will return nullptr signaling that the mouse button was not released on the clicked button
-            if(pUIElement)
+            if (pUIElement)
             {
                 // Handle the specific case of editing material's property
-                if(m_pCurrentScreen->GetScreenType() == SCREEN::MATERIALEDITING_SCREEN)
+                if (m_pCurrentScreen->GetScreenType() == SCREEN::MATERIALEDITING_SCREEN)
                 {
                     // Set current material being edited
                     SetCurrentMaterialBeingEdited(pUIElement->VGetElementText());
@@ -321,7 +321,7 @@ UIBUTTON UserInterface::MouseButtonUp(int x, int y)
 
                 // Get the child screen of that button and set it if it does have one
                 Screen* ptr = pUIElement->GetChildScreen();
-                if(ptr)
+                if (ptr)
                 {
                     SetCurrentScreen(*ptr);
                     // Handle the specific case of being in the material editing screen
@@ -332,8 +332,8 @@ UIBUTTON UserInterface::MouseButtonUp(int x, int y)
         else
         {
             m_pBackArrow->UnclickedMe();
-            if(m_pBackArrow->IsInsideElement(x, y))            
-                clickedButton = m_pBackArrow->GetButton();            
+            if (m_pBackArrow->IsInsideElement(x, y))
+                clickedButton = m_pBackArrow->GetButton();
             else
             {
                 m_pBackArrow->RestoreToPreviousStatus();// This happens when the user initially clicked a button but did not finish the clicking button process on top of the button
@@ -341,8 +341,8 @@ UIBUTTON UserInterface::MouseButtonUp(int x, int y)
             }
         }
     }
-    else if(m_pContextMenuScreen->HasMouseFocus())    
-        clickedButton = m_pContextMenuScreen->MouseButtonUpAt(x, y);            
+    else if (m_pContextMenuScreen->HasMouseFocus())
+        clickedButton = m_pContextMenuScreen->MouseButtonUpAt(x, y);
 
     switch (clickedButton)// Which UI Button the user selected
     {
@@ -351,17 +351,17 @@ UIBUTTON UserInterface::MouseButtonUp(int x, int y)
         MouseHoveringAt(x, y);
         {
             Screen* ptr = m_pCurrentScreen->GetParentScreen();
-            if(ptr)
+            if (ptr)
                 SetCurrentScreen(*ptr);
         }
         break;
     case BACKARROW: // Back button was clicked
-        {
-            Screen* ptr = m_pCurrentScreen->GetParentScreen();
-            if(ptr)
-                SetCurrentScreen(*ptr);
-        }
-        break;
+    {
+        Screen* ptr = m_pCurrentScreen->GetParentScreen();
+        if (ptr)
+            SetCurrentScreen(*ptr);
+    }
+    break;
     case NO_BUTTON:
         MouseHoveringAt(x, y);
         break;
@@ -396,13 +396,13 @@ UIBUTTON UserInterface::MouseButtonUp(int x, int y)
 void UserInterface::CreateDialogBoxes(void)
 {
     // OPEN FILE
-    HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m_dlg_OpenFile));  
+    HRESULT hr = CoCreateInstance(CLSID_FileOpenDialog, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m_dlg_OpenFile));
     if (SUCCEEDED(hr))
     {
         // File formats
-        COMDLG_FILTERSPEC filetypes[] = 
-        {   
-            { L"Wavefront Files (.obj)", L"*.obj"}
+        COMDLG_FILTERSPEC filetypes [] =
+        {
+            { L"Wavefront Files (.obj)", L"*.obj" }
         };
         m_dlg_OpenFile->SetFileTypes(ARRAYSIZE(filetypes), filetypes);
     }
@@ -412,9 +412,9 @@ void UserInterface::CreateDialogBoxes(void)
     if (SUCCEEDED(hr))
     {
         // File formats
-        COMDLG_FILTERSPEC filetypes[] = 
-        { 
-            {L"Wavefront Files (.OBJ)", L"*.obj"}
+        COMDLG_FILTERSPEC filetypes [] =
+        {
+            { L"Wavefront Files (.OBJ)", L"*.obj" }
         };
         m_dlg_SaveFile->SetFileTypes(ARRAYSIZE(filetypes), filetypes);
 
@@ -432,14 +432,14 @@ void UserInterface::CreateDialogBoxes(void)
 void UserInterface::GetInputFileName(void)
 {
     assert(m_dlg_OpenFile);
-    if(std::distance(m_Importers.begin(), m_Importers.end()) > 0)
+    if (std::distance(m_Importers.begin(), m_Importers.end()) > 0)
     {
         m_pIView->PrintMessage(UI_MSG_TYPE::CRITICAL_ERROR, L"Only one 3D Mesh at the time.");
         return;
     }
     // First show the Dialog  
     HRESULT hr = m_dlg_OpenFile->Show(m_hwnd);
-    if(SUCCEEDED(hr))
+    if (SUCCEEDED(hr))
     {
         IShellItem* pItem = nullptr;
         m_dlg_OpenFile->GetResult(&pItem);
@@ -448,7 +448,7 @@ void UserInterface::GetInputFileName(void)
         {
             PWSTR szfilepath;
             hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &szfilepath);
-            if(SUCCEEDED(hr))
+            if (SUCCEEDED(hr))
             {
                 m_ImportFilename = szfilepath;                          // keep a copy the name and path of the file
                 CoTaskMemFree(szfilepath);                              // free the memory of the file path
@@ -456,12 +456,12 @@ void UserInterface::GetInputFileName(void)
             }
 
             // 
-            IOMesh* pImporter   = new IOMesh(m_ImportFilename, m_pIView);
-            const Mesh* pMesh   = pImporter->GetImportedMesh();
-            if(pMesh)
+            IOMesh* pImporter = new IOMesh(m_ImportFilename, m_pIView);
+            const Mesh* pMesh = pImporter->GetImportedMesh();
+            if (pMesh)
             {
-                m_Importers.push_front( pImporter );
-                if(m_pIView->AddMesh(pMesh))
+                m_Importers.push_front(pImporter);
+                if (m_pIView->AddMesh(pMesh))
                 {
                     m_materials_name = pImporter->GetMaterialsName();   // Get the names of all the valid materials of the mesh
                     CreateMaterialsEditingScreens();                    // Create the screens so the user can edit the materials
@@ -475,14 +475,14 @@ void UserInterface::GetInputFileName(void)
 
 void UserInterface::GetOutputFileName(void)
 {
-    if(std::distance(m_Importers.begin(), m_Importers.end()) == 0)
+    if (std::distance(m_Importers.begin(), m_Importers.end()) == 0)
     {
-        m_pIView->PrintMessage(UI_MSG_TYPE::CRITICAL_ERROR, L"Note: There is no 3D Mesh to be exported."); 
+        m_pIView->PrintMessage(UI_MSG_TYPE::CRITICAL_ERROR, L"Note: There is no 3D Mesh to be exported.");
         return;
     }
     // First show the Dialog
     HRESULT hr = m_dlg_SaveFile->Show(m_hwnd);
-    if(SUCCEEDED(hr))
+    if (SUCCEEDED(hr))
     {
         IShellItem* pItem = nullptr;
         m_dlg_SaveFile->GetResult(&pItem);
@@ -492,13 +492,13 @@ void UserInterface::GetOutputFileName(void)
             PWSTR szfilepath;
             hr = pItem->GetDisplayName(SIGDN_FILESYSPATH, &szfilepath);
 
-            if(SUCCEEDED(hr))
+            if (SUCCEEDED(hr))
             {
                 m_ExportFilename = szfilepath;                      // keep a copy the name and path of the file
                 CoTaskMemFree(szfilepath);                          // free the memory of the file path
                 UINT index = 0;
                 hr = m_dlg_SaveFile->GetFileTypeIndex(&index);
-                m_Importers.front()->ExportMesh( m_ExportFilename, FILE_FORMATS_ARRAY[index-1]);
+                m_Importers.front()->ExportMesh(m_ExportFilename, FILE_FORMATS_ARRAY[index - 1]);
             }
         }
         SAFE_RELEASE_COM(pItem);
@@ -507,46 +507,46 @@ void UserInterface::GetOutputFileName(void)
 
 void UserInterface::CreateMainScreen(void)
 {
-    const float F_TRANSPARENCY_FACTOR   = 0.5f;
-    const float F_SCREEN_TRANSPARENCY   = 0.2f;
-    const float F_SCREEN_RADIUS         = 15.0f;
-    const float F_BUTTON_RADIUS         = 32.0f;
-    const float F_BUTTON_DIAMETER       = F_BUTTON_RADIUS * 2;
-    const uint  BUTTON_COUNT            = 6;
+    const float F_TRANSPARENCY_FACTOR = 0.5f;
+    const float F_SCREEN_TRANSPARENCY = 0.2f;
+    const float F_SCREEN_RADIUS = 15.0f;
+    const float F_BUTTON_RADIUS = 32.0f;
+    const float F_BUTTON_DIAMETER = F_BUTTON_RADIUS * 2;
+    const uint  BUTTON_COUNT = 6;
 
     D2D1_RECT_F screen;
-    screen.left    = 15.0f;
-    screen.right   = ceil(m_RenderTargetSize.width  - 15.00f);
-    screen.top     = ceil(m_RenderTargetSize.height * 00.89f);
-    screen.bottom  = ceil(m_RenderTargetSize.height - 10.00f);
+    screen.left = 15.0f;
+    screen.right = ceil(m_RenderTargetSize.width - 15.00f);
+    screen.top = ceil(m_RenderTargetSize.height * 00.89f);
+    screen.bottom = ceil(m_RenderTargetSize.height - 10.00f);
 
-    const D2D1_RECT_F screen_rect = screen;    
+    const D2D1_RECT_F screen_rect = screen;
 
     // -----------------|
     // MAIN SCREEN      |
     // -----------------|
     {
-        Screen* lpMainScreen                = nullptr;
-        ID2D1BitmapBrush* lpBitmapBrush     = nullptr;
-        lpMainScreen                        = new Screen();
-        lpMainScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top,screen_rect.bottom , F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MAIN_SCREEN);
+        Screen* lpMainScreen = nullptr;
+        ID2D1BitmapBrush* lpBitmapBrush = nullptr;
+        lpMainScreen = new Screen();
+        lpMainScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom, F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MAIN_SCREEN);
 
-        const float F_WIDTH                 = lpMainScreen->GetWidth();
-        const float F_SEPARATION_FACTOR     = (F_WIDTH - (F_BUTTON_DIAMETER * BUTTON_COUNT)) / BUTTON_COUNT;
-        const float F_BRUSH_SIZE            = 2.0f;
+        const float F_WIDTH = lpMainScreen->GetWidth();
+        const float F_SEPARATION_FACTOR = (F_WIDTH - (F_BUTTON_DIAMETER * BUTTON_COUNT)) / BUTTON_COUNT;
+        const float F_BRUSH_SIZE = 2.0f;
 
         const Color NEW_default_color(COLOR_NAME::LightGray, 1.0f);
         const Color NEW_hovering_color(COLOR_NAME::White, 1.0f);
         const Color NEW_clicked_color(COLOR_NAME::LightCyan, 0.6f);
         const Color NEW_textColor(COLOR_NAME::White, 1.0f);
 
-        const D2D_COLOR_F default_color     = D2D1::ColorF(D2D1::ColorF::LightGray, 1.0f);
-        const D2D_COLOR_F hovering_color    = D2D1::ColorF(D2D1::ColorF::White,     1.0f);
-        const D2D_COLOR_F clicked_color     = D2D1::ColorF(D2D1::ColorF::LightCyan, 0.6f);
-        const D2D_COLOR_F textColor         = D2D1::ColorF(D2D1::ColorF::White,     1.0f);
+        const D2D_COLOR_F default_color = D2D1::ColorF(D2D1::ColorF::LightGray, 1.0f);
+        const D2D_COLOR_F hovering_color = D2D1::ColorF(D2D1::ColorF::White, 1.0f);
+        const D2D_COLOR_F clicked_color = D2D1::ColorF(D2D1::ColorF::LightCyan, 0.6f);
+        const D2D_COLOR_F textColor = D2D1::ColorF(D2D1::ColorF::White, 1.0f);
 
         float horizontal_separation = 0.0f;
-        const float F_VERTICAL_SEPARATION = ceil((lpMainScreen->GetHeight() * .50f) - (FONT_SIZE/2.0f));    // 50% of height (the middle) /////// ADD MORE INFORMATION ON THIS
+        const float F_VERTICAL_SEPARATION = ceil((lpMainScreen->GetHeight() * .50f) - (FONT_SIZE / 2.0f));    // 50% of height (the middle) /////// ADD MORE INFORMATION ON THIS
 
         // Import/Export Menu
         {
@@ -563,24 +563,24 @@ void UserInterface::CreateMainScreen(void)
             // ImportExportButton->SetOutlineBrushSize(F_BRUSH_SIZE);
             ImportExportButton->SetOutlineBrushSize(6.0f);
             ImportExportButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            ImportExportButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            ImportExportButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             ImportExportButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
             lpMainScreen->AddUIElement(ImportExportButton);
 
             // Import/Export screen
             {
-                Screen* pImportExportScreen     = nullptr;
+                Screen* pImportExportScreen = nullptr;
 
                 pImportExportScreen = new Screen();
-                pImportExportScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom , F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::IMPORTEXPORTMESH);
+                pImportExportScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom, F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::IMPORTEXPORTMESH);
 
                 // Import Mesh Menu (Round-Button)
                 {
                     RoundButton* ImportMeshButton = nullptr;
                     ImportMeshButton = new RoundButton();
-                    float x = screen_rect.left + (pImportExportScreen->GetWidth()/2.0f/2.0f);
-                    float y = screen_rect.top  + (pImportExportScreen->GetHeight()/2.0f) - (96.0f/FONT_SIZE)/2.0f;
+                    float x = screen_rect.left + (pImportExportScreen->GetWidth() / 2.0f / 2.0f);
+                    float y = screen_rect.top + (pImportExportScreen->GetHeight() / 2.0f) - (96.0f / FONT_SIZE) / 2.0f;
 
                     ImportMeshButton->Initialize(float2(x, y), 32.0f, UIBUTTON::IMPORTMESH, wstring(L"Import Mesh"), textColor);
 
@@ -591,7 +591,7 @@ void UserInterface::CreateMainScreen(void)
                     // Effects
                     ImportMeshButton->SetOutlineBrushSize(F_BRUSH_SIZE);
                     ImportMeshButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                    ImportMeshButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                    ImportMeshButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                     ImportMeshButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
                     // Added to ImportExport Screen
@@ -602,8 +602,8 @@ void UserInterface::CreateMainScreen(void)
                 {
                     RoundButton* DelteMesh = nullptr;
                     DelteMesh = new RoundButton();
-                    float x = screen_rect.left + (pImportExportScreen->GetWidth()/2.0f);
-                    float y = screen_rect.top  + (pImportExportScreen->GetHeight()/2.0f) - (96.0f/FONT_SIZE)/2.0f;
+                    float x = screen_rect.left + (pImportExportScreen->GetWidth() / 2.0f);
+                    float y = screen_rect.top + (pImportExportScreen->GetHeight() / 2.0f) - (96.0f / FONT_SIZE) / 2.0f;
 
                     DelteMesh->Initialize(float2(x, y), 32.0f, UIBUTTON::DELETEMESH, wstring(L"Delete Mesh"), textColor);
 
@@ -614,7 +614,7 @@ void UserInterface::CreateMainScreen(void)
                     // Effects
                     DelteMesh->SetOutlineBrushSize(F_BRUSH_SIZE);
                     DelteMesh->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                    DelteMesh->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                    DelteMesh->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                     DelteMesh->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
                     // Added to ImportExport Screen
@@ -626,8 +626,8 @@ void UserInterface::CreateMainScreen(void)
                     RoundButton* ExportMeshButton = nullptr;
                     ExportMeshButton = new RoundButton();
 
-                    float x = screen_rect.left + ((pImportExportScreen->GetWidth()/2.0f) + (pImportExportScreen->GetWidth()/2.0f/2.0f) );
-                    float y = screen_rect.top  + (pImportExportScreen->GetHeight()/2.0f) - (m_dpiY/FONT_SIZE)/2.0f;
+                    float x = screen_rect.left + ((pImportExportScreen->GetWidth() / 2.0f) + (pImportExportScreen->GetWidth() / 2.0f / 2.0f));
+                    float y = screen_rect.top + (pImportExportScreen->GetHeight() / 2.0f) - (m_dpiY / FONT_SIZE) / 2.0f;
 
                     ExportMeshButton->Initialize(float2(x, y), 32.0f, UIBUTTON::EXPORTMESH, wstring(L"Export Mesh"), textColor);
 
@@ -638,7 +638,7 @@ void UserInterface::CreateMainScreen(void)
                     // Effects
                     ExportMeshButton->SetOutlineBrushSize(F_BRUSH_SIZE);
                     ExportMeshButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                    ExportMeshButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                    ExportMeshButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                     ExportMeshButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
                     // Added to ImportExport Screen
@@ -660,7 +660,7 @@ void UserInterface::CreateMainScreen(void)
         {
             RoundButton* CameraMenuButton = new RoundButton();
 
-            horizontal_separation   += F_SEPARATION_FACTOR + F_BUTTON_RADIUS;
+            horizontal_separation += F_SEPARATION_FACTOR + F_BUTTON_RADIUS;
             CameraMenuButton->Initialize(float2(screen_rect.left + horizontal_separation, screen_rect.top + F_VERTICAL_SEPARATION), F_BUTTON_RADIUS, UIBUTTON::CAMERAMENU, wstring(L"Camera Menu"), textColor);
 
             lpBitmapBrush = CreateBitmapBrush(L"Icons\\CameraMenu.png", m_pWicImagingFactory, m_pD2DContext);
@@ -670,7 +670,7 @@ void UserInterface::CreateMainScreen(void)
             // Effects
             CameraMenuButton->SetOutlineBrushSize(F_BRUSH_SIZE);
             CameraMenuButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            CameraMenuButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            CameraMenuButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             CameraMenuButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
             lpMainScreen->AddUIElement(CameraMenuButton);
@@ -678,22 +678,22 @@ void UserInterface::CreateMainScreen(void)
             // Camera menu screen
             {
                 Screen* pCameramenuScreen = new Screen();
-                pCameramenuScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom , F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::CAMERA_SETTINGS);
-                const float pos_y = screen_rect.top + pCameramenuScreen->GetHeight() * 1/2 - FONT_SIZE;
+                pCameramenuScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom, F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::CAMERA_SETTINGS);
+                const float pos_y = screen_rect.top + pCameramenuScreen->GetHeight() * 1 / 2 - FONT_SIZE;
 
                 // Setting the static variables for the scroll bars
                 lpBitmapBrush = nullptr;
-                lpBitmapBrush = CreateBitmapBrush(L"Icons\\LeftScrollBarButton.png", m_pWicImagingFactory, m_pD2DContext);                    
-                ScrollBar::SetLeftButtonBrush( lpBitmapBrush );
+                lpBitmapBrush = CreateBitmapBrush(L"Icons\\LeftScrollBarButton.png", m_pWicImagingFactory, m_pD2DContext);
+                ScrollBar::SetLeftButtonBrush(lpBitmapBrush);
                 lpBitmapBrush = nullptr;
-                lpBitmapBrush = CreateBitmapBrush(L"Icons\\RightScrollBarButton.png", m_pWicImagingFactory, m_pD2DContext);                    
-                ScrollBar::SetRightButtonBrush( lpBitmapBrush );
+                lpBitmapBrush = CreateBitmapBrush(L"Icons\\RightScrollBarButton.png", m_pWicImagingFactory, m_pD2DContext);
+                ScrollBar::SetRightButtonBrush(lpBitmapBrush);
                 lpBitmapBrush = nullptr;
 
                 // Camera movement speed Scroll-Bar
                 {
                     ScrollBar* cameramovementScrollBar = new ScrollBar();
-                    const float pos_x = screen_rect.left + pCameramenuScreen->GetWidth() * 1/4 - 85.0f;
+                    const float pos_x = screen_rect.left + pCameramenuScreen->GetWidth() * 1 / 4 - 85.0f;
 
                     cameramovementScrollBar->Initialize(pos_x, pos_y, UIBUTTON::CAMERAMOVEMENT, wstring(L"Panning Speed"), m_iCameraMovementSpeed);
 
@@ -701,7 +701,7 @@ void UserInterface::CreateMainScreen(void)
                     m_pCameraMovementSpeedSB = cameramovementScrollBar;
 
                     // Add it to the Camera settings' screen
-                    pCameramenuScreen->AddUIElement( cameramovementScrollBar );
+                    pCameramenuScreen->AddUIElement(cameramovementScrollBar);
 
                     // we do this here so the camera speed is updated after the value has been loaded
                     View* pview = reinterpret_cast<View*>(m_pIView);
@@ -711,14 +711,14 @@ void UserInterface::CreateMainScreen(void)
                 // Camera zoom speed Scroll-Bar
                 {
                     ScrollBar* CameraZoomSpeed = new ScrollBar();
-                    const float pos_x = screen_rect.left + pCameramenuScreen->GetWidth()*3/4 - 85.0f;
+                    const float pos_x = screen_rect.left + pCameramenuScreen->GetWidth() * 3 / 4 - 85.0f;
                     CameraZoomSpeed->Initialize(pos_x, pos_y, UIBUTTON::CAMERAZOOMSPEED, wstring(L"Zoom Speed"), m_iCameraZoomSpeed);
 
                     // Save this in the UserInterface class it will be needed everytime the camera movement speed is changed.
                     m_pCameraZoomSpeedSB = CameraZoomSpeed;
 
                     // Add it to the Camera settings' screen
-                    pCameramenuScreen->AddUIElement( CameraZoomSpeed );
+                    pCameramenuScreen->AddUIElement(CameraZoomSpeed);
 
                     // we do this here so the camera speed is updated after the value has been loaded
                     View* pview = reinterpret_cast<View*>(m_pIView);
@@ -726,19 +726,19 @@ void UserInterface::CreateMainScreen(void)
                 }
 
                 // Set the main screen as the parent of this screen
-                pCameramenuScreen->SetParent( lpMainScreen );
+                pCameramenuScreen->SetParent(lpMainScreen);
 
                 // Set this screen as the child of the Camera-Menu button
-                CameraMenuButton->SetChildScreen( pCameramenuScreen );
+                CameraMenuButton->SetChildScreen(pCameramenuScreen);
 
                 // Add this screen to the screens-list variable for proper destruction
-                m_ScreensList.push_front( pCameramenuScreen );
+                m_ScreensList.push_front(pCameramenuScreen);
             }
         }
 
         // Environment Menu
         {
-            RoundButton* EnvironmentMenuButton  = new RoundButton();
+            RoundButton* EnvironmentMenuButton = new RoundButton();
 
             horizontal_separation += F_SEPARATION_FACTOR + F_BUTTON_RADIUS;
             EnvironmentMenuButton->Initialize(float2(screen_rect.left + horizontal_separation, screen_rect.top + F_VERTICAL_SEPARATION), F_BUTTON_RADIUS, UIBUTTON::ENVIRONMENTMENU, wstring(L"Environment"), textColor);
@@ -750,7 +750,7 @@ void UserInterface::CreateMainScreen(void)
             // Effects
             EnvironmentMenuButton->SetOutlineBrushSize(F_BRUSH_SIZE);
             EnvironmentMenuButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            EnvironmentMenuButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            EnvironmentMenuButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             EnvironmentMenuButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
             lpMainScreen->AddUIElement(EnvironmentMenuButton);
@@ -759,15 +759,15 @@ void UserInterface::CreateMainScreen(void)
             {
                 Screen* pEnvironmentScreen = nullptr;
                 pEnvironmentScreen = new Screen();
-                pEnvironmentScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom , F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::ENVIRONMENTOPTIONS);
+                pEnvironmentScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom, F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::ENVIRONMENTOPTIONS);
 
                 // Show/Hide World Axes button (Round-Button)
                 {
                     RoundButton* ShowHideAxesButton = nullptr;
-                    ShowHideAxesButton              = new RoundButton();
+                    ShowHideAxesButton = new RoundButton();
 
-                    float x = screen_rect.left + (pEnvironmentScreen->GetWidth()/2.0f - 128.0f);
-                    float y = screen_rect.top  + (pEnvironmentScreen->GetHeight()/2.0f) - (96.0f/FONT_SIZE)/2.0f;
+                    float x = screen_rect.left + (pEnvironmentScreen->GetWidth() / 2.0f - 128.0f);
+                    float y = screen_rect.top + (pEnvironmentScreen->GetHeight() / 2.0f) - (96.0f / FONT_SIZE) / 2.0f;
 
                     ShowHideAxesButton->Initialize(float2(x, y), 32.0f, UIBUTTON::AXESONOFF, wstring(L"Axes On/Off"), textColor);
 
@@ -778,7 +778,7 @@ void UserInterface::CreateMainScreen(void)
                     // Effects
                     ShowHideAxesButton->SetOutlineBrushSize(F_BRUSH_SIZE);
                     ShowHideAxesButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                    ShowHideAxesButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                    ShowHideAxesButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                     ShowHideAxesButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
                     ShowHideAxesButton->SetPermanentlyActiveEffect(ACTIVE_EFFECT::DRAWMASK_A, hovering_color);
 
@@ -792,10 +792,10 @@ void UserInterface::CreateMainScreen(void)
                 // Show/Hide Grid button (Round-Button)
                 {
                     RoundButton* ShowHideGridButton = nullptr;
-                    ShowHideGridButton              = new RoundButton();
+                    ShowHideGridButton = new RoundButton();
 
-                    float x = screen_rect.left + (pEnvironmentScreen->GetWidth()/2.0f + 128.0f);
-                    float y = screen_rect.top  + (pEnvironmentScreen->GetHeight()/2.0f) - (96.0f/FONT_SIZE)/2.0f;
+                    float x = screen_rect.left + (pEnvironmentScreen->GetWidth() / 2.0f + 128.0f);
+                    float y = screen_rect.top + (pEnvironmentScreen->GetHeight() / 2.0f) - (96.0f / FONT_SIZE) / 2.0f;
 
                     ShowHideGridButton->Initialize(float2(x, y), 32.0f, UIBUTTON::GRIDONOFF, wstring(L"Grid On/Off"), textColor);
 
@@ -806,7 +806,7 @@ void UserInterface::CreateMainScreen(void)
                     // Effects
                     ShowHideGridButton->SetOutlineBrushSize(F_BRUSH_SIZE);
                     ShowHideGridButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                    ShowHideGridButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                    ShowHideGridButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                     ShowHideGridButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
                     ShowHideGridButton->SetPermanentlyActiveEffect(ACTIVE_EFFECT::DRAWMASK_A, hovering_color);
 
@@ -841,7 +841,7 @@ void UserInterface::CreateMainScreen(void)
             // Effects
             MaterialMenuButton->SetOutlineBrushSize(F_BRUSH_SIZE);
             MaterialMenuButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            MaterialMenuButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            MaterialMenuButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             MaterialMenuButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
             lpMainScreen->AddUIElement(MaterialMenuButton);
@@ -850,7 +850,7 @@ void UserInterface::CreateMainScreen(void)
             {
                 Screen* lpMaterialScreen = nullptr;
                 lpMaterialScreen = new Screen();
-                lpMaterialScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom , F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MATERIALEDITING_SCREEN);
+                lpMaterialScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom, F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MATERIALEDITING_SCREEN);
 
                 // Add UI Buttons here (NOT NECESSARY FOR THIS SCREEN)
 
@@ -865,7 +865,7 @@ void UserInterface::CreateMainScreen(void)
 
                 // Se the this screen as the child screen when the user clicks the material editing button
                 MaterialMenuButton->SetChildScreen(lpMaterialScreen);
-            }            
+            }
         }
 
         // Mesh Menu
@@ -882,7 +882,7 @@ void UserInterface::CreateMainScreen(void)
             // Effects
             MeshMenuButton->SetOutlineBrushSize(F_BRUSH_SIZE);
             MeshMenuButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            MeshMenuButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            MeshMenuButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             MeshMenuButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
             lpMainScreen->AddUIElement(MeshMenuButton);
@@ -891,9 +891,9 @@ void UserInterface::CreateMainScreen(void)
             {
 
                 Screen* pMeshMenuScreen = new Screen();
-                pMeshMenuScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom , F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MESH_SETTINGS);
+                pMeshMenuScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom, F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MESH_SETTINGS);
 
-                const float const_distance = ((pMeshMenuScreen->GetWidth() * .90f ) - (64.0f*4.0f))/4.0f;
+                const float const_distance = ((pMeshMenuScreen->GetWidth() * .90f) - (64.0f*4.0f)) / 4.0f;
                 float separation = const_distance;
 
                 // Back Face Culling
@@ -903,7 +903,7 @@ void UserInterface::CreateMainScreen(void)
 
                     separation += 32.0f;
                     float x = screen_rect.left + (pMeshMenuScreen->GetWidth()*.25f);
-                    float y = screen_rect.top  + (pMeshMenuScreen->GetHeight()/2.0f - (96.0f/FONT_SIZE)/2.0f);
+                    float y = screen_rect.top + (pMeshMenuScreen->GetHeight() / 2.0f - (96.0f / FONT_SIZE) / 2.0f);
 
                     BackFaceCullingButton->Initialize(float2(x, screen_rect.top + F_VERTICAL_SEPARATION), 32.0f, UIBUTTON::BACKFACECULLING, wstring(L"Back-Face Culling"), textColor);
 
@@ -914,7 +914,7 @@ void UserInterface::CreateMainScreen(void)
                     // Effects
                     BackFaceCullingButton->SetOutlineBrushSize(F_BRUSH_SIZE);
                     BackFaceCullingButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                    BackFaceCullingButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                    BackFaceCullingButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                     BackFaceCullingButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
                     BackFaceCullingButton->SetPermanentlyActiveEffect(ACTIVE_EFFECT::DRAWMASK_A, hovering_color);
 
@@ -929,8 +929,8 @@ void UserInterface::CreateMainScreen(void)
                     RoundButton* FlipFacesButton = nullptr;
                     FlipFacesButton = new RoundButton();
 
-                    float x = screen_rect.left + (pMeshMenuScreen->GetWidth()/2.0f);
-                    float y = screen_rect.top  + (pMeshMenuScreen->GetHeight()/2.0f - (96.0f/FONT_SIZE)/2.0f);
+                    float x = screen_rect.left + (pMeshMenuScreen->GetWidth() / 2.0f);
+                    float y = screen_rect.top + (pMeshMenuScreen->GetHeight() / 2.0f - (96.0f / FONT_SIZE) / 2.0f);
 
                     FlipFacesButton->Initialize(float2(x, y), 32.0f, UIBUTTON::FLIPFACES, wstring(L"Change Coord-System"), textColor);
 
@@ -941,7 +941,7 @@ void UserInterface::CreateMainScreen(void)
                     // Effects
                     FlipFacesButton->SetOutlineBrushSize(F_BRUSH_SIZE);
                     FlipFacesButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                    FlipFacesButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                    FlipFacesButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                     FlipFacesButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
                     // Added to ImportExport Screen
@@ -977,8 +977,8 @@ void UserInterface::CreateMainScreen(void)
                     RoundButton* WireFrameModeButton = nullptr;
                     WireFrameModeButton = new RoundButton();
 
-                    float x = screen_rect.left + ((pMeshMenuScreen->GetWidth()/2.0f) + (pMeshMenuScreen->GetWidth()*.25f));
-                    float y = screen_rect.top  + (pMeshMenuScreen->GetHeight()/2.0f - (96.0f/FONT_SIZE)/2.0f);
+                    float x = screen_rect.left + ((pMeshMenuScreen->GetWidth() / 2.0f) + (pMeshMenuScreen->GetWidth()*.25f));
+                    float y = screen_rect.top + (pMeshMenuScreen->GetHeight() / 2.0f - (96.0f / FONT_SIZE) / 2.0f);
 
                     WireFrameModeButton->Initialize(float2(x, y), 32.0f, UIBUTTON::WIREFRAMEMODE, wstring(L"Wireframe Mode"), textColor);
 
@@ -989,7 +989,7 @@ void UserInterface::CreateMainScreen(void)
                     // Effects
                     WireFrameModeButton->SetOutlineBrushSize(F_BRUSH_SIZE);
                     WireFrameModeButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                    WireFrameModeButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                    WireFrameModeButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                     WireFrameModeButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
                     WireFrameModeButton->SetPermanentlyActiveEffect(ACTIVE_EFFECT::DRAWMASK_A, hovering_color);
 
@@ -1011,7 +1011,7 @@ void UserInterface::CreateMainScreen(void)
 
         // ShowHide Context-Menu
         {
-            RoundButton* ShoWHideContextButton  = new RoundButton();
+            RoundButton* ShoWHideContextButton = new RoundButton();
 
             horizontal_separation += F_SEPARATION_FACTOR + F_BUTTON_RADIUS;
             ShoWHideContextButton->Initialize(float2(screen_rect.left + horizontal_separation, screen_rect.top + F_VERTICAL_SEPARATION), F_BUTTON_RADIUS, UIBUTTON::SHOWHIDECONTEXTMENU, wstring(L"Context Menu"), textColor);
@@ -1023,7 +1023,7 @@ void UserInterface::CreateMainScreen(void)
             // Effects
             ShoWHideContextButton->SetOutlineBrushSize(F_BRUSH_SIZE);
             ShoWHideContextButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            ShoWHideContextButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            ShoWHideContextButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             ShoWHideContextButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
             ShoWHideContextButton->SetPermanentlyActiveEffect(ACTIVE_EFFECT::DRAWMASK_A, hovering_color);
 
@@ -1034,43 +1034,43 @@ void UserInterface::CreateMainScreen(void)
         }
 
         // Final step add the main screen to the screens list and set it as the current screen in the UI
-        m_ScreensList.push_front( lpMainScreen );        
-        SetCurrentScreen( *lpMainScreen );
+        m_ScreensList.push_front(lpMainScreen);
+        SetCurrentScreen(*lpMainScreen);
     }
 }
 
 void UserInterface::CreateContexMenu(void)
 {
-    const float TRANSPARENCY_FACTOR     = 0.5f;
+    const float TRANSPARENCY_FACTOR = 0.5f;
 
-    ID2D1BitmapBrush* lpBitmapBrush     = nullptr;
-    SquareButton* lpRoundButton         = nullptr;
+    ID2D1BitmapBrush* lpBitmapBrush = nullptr;
+    SquareButton* lpRoundButton = nullptr;
 
     uint size = sizeof(RoundButton);
 
-    const D2D_COLOR_F default_color     = D2D1::ColorF(D2D1::ColorF::LightGray, 1.0f);
-    const D2D_COLOR_F hovering_color    = D2D1::ColorF(D2D1::ColorF::White, 1.0f);
-    const D2D_COLOR_F clicked_color     = D2D1::ColorF(D2D1::ColorF::LightCyan, 0.6f);
-    const D2D_COLOR_F textColor         = D2D1::ColorF(D2D1::ColorF::White, 1.0f);
-    const D2D_COLOR_F active_color      = D2D1::ColorF(D2D1::ColorF::White, 1.0f);
+    const D2D_COLOR_F default_color = D2D1::ColorF(D2D1::ColorF::LightGray, 1.0f);
+    const D2D_COLOR_F hovering_color = D2D1::ColorF(D2D1::ColorF::White, 1.0f);
+    const D2D_COLOR_F clicked_color = D2D1::ColorF(D2D1::ColorF::LightCyan, 0.6f);
+    const D2D_COLOR_F textColor = D2D1::ColorF(D2D1::ColorF::White, 1.0f);
+    const D2D_COLOR_F active_color = D2D1::ColorF(D2D1::ColorF::White, 1.0f);
 
     // -----------------|
     // Context Menu     |
     // -----------------|
     {
         omi::Rectangle rect;
-        rect.mleft      = m_RenderTargetSize.width * .87f;
-        rect.mright     = rect.mleft + 50.0f;
-        rect.mtop       = m_RenderTargetSize.height * .10f;
-        rect.mbottom    = rect.mtop + 250.0f;
-        float yoffset   = 250.0f - (250.0f * .968f);
-        
+        rect.mleft = m_RenderTargetSize.width * .87f;
+        rect.mright = rect.mleft + 50.0f;
+        rect.mtop = m_RenderTargetSize.height * .10f;
+        rect.mbottom = rect.mtop + 250.0f;
+        float yoffset = 250.0f - (250.0f * .968f);
+
         Screen* lpScreen = nullptr;
         lpScreen = new Screen();
         lpScreen->InitializeScreen(rect.mleft, rect.mright, rect.mtop, rect.mbottom, 0.2f, 7.0f, SCREEN::CAMERA_SETTINGS);
 
-        const float xoffset     = 5.0f;
-        const float yIncrement  = 41 + (((200.0f * .96f) - (40.0f * 4.0f))/4.0f);
+        const float xoffset = 5.0f;
+        const float yIncrement = 41 + (((200.0f * .96f) - (40.0f * 4.0f)) / 4.0f);
 
         // Light follow the camera
         {
@@ -1086,7 +1086,7 @@ void UserInterface::CreateContexMenu(void)
             // Effects
             lpRoundButton->SetOutlineBrushSize(1.0f);
             lpRoundButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            lpRoundButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            lpRoundButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             lpRoundButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
             lpRoundButton->SetPermanentlyActiveEffect(ACTIVE_EFFECT::DRAWMASK_A, active_color);
 
@@ -1099,9 +1099,9 @@ void UserInterface::CreateContexMenu(void)
             yoffset += yIncrement;
             lpRoundButton = new SquareButton();
 
-            lpRoundButton->Initialize( 
-                rect.mleft  + xoffset,          // left coordinate of the rectangle
-                rect.mtop   + yoffset,          // top coordinate of the rectangle
+            lpRoundButton->Initialize(
+                rect.mleft + xoffset,          // left coordinate of the rectangle
+                rect.mtop + yoffset,          // top coordinate of the rectangle
                 40.0f,                          // width of the button
                 40.0f,                          // height of the button
                 UIBUTTON::LIGHT_TO_EYE,         // Button type specifier
@@ -1117,7 +1117,7 @@ void UserInterface::CreateContexMenu(void)
             // Effects
             lpRoundButton->SetOutlineBrushSize(1.0f);
             lpRoundButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            lpRoundButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            lpRoundButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             lpRoundButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
             lpScreen->AddUIElement(lpRoundButton);
@@ -1139,7 +1139,7 @@ void UserInterface::CreateContexMenu(void)
             // Effects
             lpRoundButton->SetOutlineBrushSize(1.0f);
             lpRoundButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            lpRoundButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            lpRoundButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             lpRoundButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
             lpRoundButton->SetPermanentlyActiveEffect(ACTIVE_EFFECT::DRAWMASK_A, active_color);
 
@@ -1162,7 +1162,7 @@ void UserInterface::CreateContexMenu(void)
             // Effects
             lpRoundButton->SetOutlineBrushSize(1.0f);
             lpRoundButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            lpRoundButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            lpRoundButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             lpRoundButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
             lpRoundButton->SetPermanentlyActiveEffect(ACTIVE_EFFECT::DRAWMASK_A, active_color);
 
@@ -1187,7 +1187,7 @@ void UserInterface::CreateContexMenu(void)
             // Effects
             lpRoundButton->SetOutlineBrushSize(1.0f);
             lpRoundButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-            lpRoundButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+            lpRoundButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
             lpRoundButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
             lpRoundButton->SetPermanentlyActiveEffect(ACTIVE_EFFECT::DRAWMASK_A, active_color);
 
@@ -1208,15 +1208,15 @@ void UserInterface::CreateContexMenu(void)
     // --------------------------|
     lpBitmapBrush = nullptr;
     RoundButton* Back_Arrow = new RoundButton();
-    Back_Arrow->Initialize(float2(0.0f, 0.0f), 16.0f, UIBUTTON::BACKARROW, wstring(), D2D1::ColorF(D2D1::ColorF::White, 1.0f)); 
+    Back_Arrow->Initialize(float2(0.0f, 0.0f), 16.0f, UIBUTTON::BACKARROW, wstring(), D2D1::ColorF(D2D1::ColorF::White, 1.0f));
 
     lpBitmapBrush = CreateBitmapBrush(L"Icons\\BackArrow.png", m_pWicImagingFactory, m_pD2DContext);
-    Back_Arrow->SetDefaultStatusBitmap(lpBitmapBrush);   
+    Back_Arrow->SetDefaultStatusBitmap(lpBitmapBrush);
 
     // Effects
     Back_Arrow->SetOutlineBrushSize(1.0f);
     Back_Arrow->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-    Back_Arrow->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+    Back_Arrow->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
     Back_Arrow->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
     m_pBackArrow = Back_Arrow;
 }
@@ -1227,24 +1227,24 @@ void UserInterface::MouseHoveringAt(int x, int y) // This function tracks where 
     UIBUTTON button = m_pCurrentScreen->MouseHoveringAt(x, y);
 
     // If it's outside the current screen then release it
-    if(button == UIBUTTON::OUTSIDE_SCREEN)        
+    if (button == UIBUTTON::OUTSIDE_SCREEN)
     {
         // Make the current screen release the mouse in case it was previously inside it but not anymore
         m_pCurrentScreen->ReleaseMouse();
 
         // if the context menu is not hidden
-        if( m_pContextMenuScreen->IsHidden() == false)
+        if (m_pContextMenuScreen->IsHidden() == false)
         {
             // check if the mouse is hovering inside the context menu screen
             button = m_pContextMenuScreen->MouseHoveringAt(x, y);
 
             // if it is inside the context menu Capture the Mouse
             // else release the mouse in case it was previously caught/inside the context menu screen            
-            if(button != UIBUTTON::OUTSIDE_SCREEN)            
+            if (button != UIBUTTON::OUTSIDE_SCREEN)
                 m_pContextMenuScreen->CaptureMouse();
-            
-            else            
-                m_pContextMenuScreen->ReleaseMouse();            
+
+            else
+                m_pContextMenuScreen->ReleaseMouse();
         }
     }
     // Else if it still is inside the current screen check
@@ -1254,37 +1254,37 @@ void UserInterface::MouseHoveringAt(int x, int y) // This function tracks where 
         m_pCurrentScreen->CaptureMouse();
 
         // if the mouse is inside the current screen but it is not hovering on any specific button
-        if(button == UIBUTTON::NO_BUTTON)
+        if (button == UIBUTTON::NO_BUTTON)
         {
             // then check if it's hovering inside the back button arraow, which doesn't belong to any screen
 
             // if it is hovering on the back-arrow button then send the button the message
-            if(m_pBackArrow->IsInsideElement(x, y))            
+            if (m_pBackArrow->IsInsideElement(x, y))
                 m_pBackArrow->MouseHoveringOnMe(true);
-            
+
             // if it's not then make sure the button still receives a message letting it know in case it was previously tracking the mouse as being on top of it
-            else            
+            else
                 m_pBackArrow->MouseHoveringOnMe(false);
         }
     }
 }
 
-UIBUTTON UserInterface::MouseClickAt(int x, int y) 
+UIBUTTON UserInterface::MouseClickAt(int x, int y)
 {
     UIBUTTON button = UIBUTTON::NO_BUTTON;
-    if(m_pCurrentScreen->HasMouseFocus())
+    if (m_pCurrentScreen->HasMouseFocus())
     {
         button = m_pCurrentScreen->MouseClickedAt(x, y);
-        if(button == UIBUTTON::NO_BUTTON)
+        if (button == UIBUTTON::NO_BUTTON)
         {
-            if(m_pBackArrow->IsInsideElement(x, y))
+            if (m_pBackArrow->IsInsideElement(x, y))
             {
                 m_pBackArrow->MouseClickedMe();
                 button = UIBUTTON::BACKARROW;
             }
         }
     }
-    else if(m_pContextMenuScreen->HasMouseFocus())
+    else if (m_pContextMenuScreen->HasMouseFocus())
     {
         button = m_pContextMenuScreen->MouseClickedAt(x, y);
     }
@@ -1294,12 +1294,12 @@ UIBUTTON UserInterface::MouseClickAt(int x, int y)
 void UserInterface::SetCurrentScreen(Screen& pScreen)
 {
     // Set it as the current screen
-    m_pCurrentScreen            = &pScreen;
+    m_pCurrentScreen = &pScreen;
 
-    const omi::Rectangle rect   = pScreen.GetScreenRect();    
+    const omi::Rectangle rect = pScreen.GetScreenRect();
     D2D1_POINT_2F point;
-    point.x                     = rect.mleft + 5.0f;
-    point.y                     = rect.mtop  + 5.0f;
+    point.x = rect.mleft + 5.0f;
+    point.y = rect.mtop + 5.0f;
 
     m_pBackArrow->RePositionElement(point);
 }
@@ -1307,21 +1307,21 @@ void UserInterface::SetCurrentScreen(Screen& pScreen)
 void UserInterface::EmptyMeshList(void)
 {
     // Delete all the Meshes
-    for_each(m_Importers.begin(), m_Importers.end(), [&] (IOMesh* _ptr)
+    for_each(m_Importers.begin(), m_Importers.end(), [&](IOMesh* _ptr)
     {
-        SAFE_DELETE( _ptr );
+        SAFE_DELETE(_ptr);
     });
     m_Importers.clear();
 
     // Delete all the Screens
-    for_each(m_MaterialScreenList.begin(), m_MaterialScreenList.end(), [&] (Screen* _ptr)
+    for_each(m_MaterialScreenList.begin(), m_MaterialScreenList.end(), [&](Screen* _ptr)
     {
-        SAFE_DELETE( _ptr );
+        SAFE_DELETE(_ptr);
     });
     m_MaterialScreenList.clear();
 
     // Delete UI Buttons from the material editing screen
-    m_pMaterialsScreen->DumpUIElements();    
+    m_pMaterialsScreen->DumpUIElements();
 }
 
 int UserInterface::GetCameraSpeedValue(void)
@@ -1338,28 +1338,28 @@ int UserInterface::GetCameraZoomSpeed(void)
 
 void UserInterface::LoadDefaultValues(void)
 {
-    m_iCameraMovementSpeed  = 10;
-    m_iCameraZoomSpeed      = 10;
+    m_iCameraMovementSpeed = 10;
+    m_iCameraZoomSpeed = 10;
 }
 
 void UserInterface::LoadSettingsFromFile(const char* filebuffer, size_t file_lenght)
 {
     size_t current_index = 0;
-    while(current_index < file_lenght)
+    while (current_index < file_lenght)
     {
-        const SETTING_TOKEN* token = reinterpret_cast<const SETTING_TOKEN*>( &(filebuffer[current_index]) );
+        const SETTING_TOKEN* token = reinterpret_cast<const SETTING_TOKEN*>(&(filebuffer[current_index]));
 
         // Process token
-        if(*token == SETTING_TOKEN::CAMERAMOVEMENTSPEED_SETTING )
+        if (*token == SETTING_TOKEN::CAMERAMOVEMENTSPEED_SETTING)
         {
-            current_index += sizeof( SETTING_TOKEN );
-            const unsigned short* pshort = reinterpret_cast<const unsigned short*>( &(filebuffer[current_index]) );
+            current_index += sizeof(SETTING_TOKEN);
+            const unsigned short* pshort = reinterpret_cast<const unsigned short*>(&(filebuffer[current_index]));
             m_iCameraMovementSpeed = *pshort;
         }
-        else if(*token == SETTING_TOKEN::CAMERAZOOMSPEED_SETTING)
+        else if (*token == SETTING_TOKEN::CAMERAZOOMSPEED_SETTING)
         {
-            current_index += sizeof( SETTING_TOKEN );
-            const unsigned short* pshort = reinterpret_cast<const unsigned short*>( &(filebuffer[current_index]) );
+            current_index += sizeof(SETTING_TOKEN);
+            const unsigned short* pshort = reinterpret_cast<const unsigned short*>(&(filebuffer[current_index]));
             m_iCameraZoomSpeed = *pshort;
         }
         // if there is token that is not recognized then we need not to process any more tokens
@@ -1367,7 +1367,7 @@ void UserInterface::LoadSettingsFromFile(const char* filebuffer, size_t file_len
         {
             current_index = file_lenght;
         }
-        current_index += sizeof( unsigned short );
+        current_index += sizeof(unsigned short);
     }
 }
 
@@ -1378,49 +1378,49 @@ void UserInterface::SetCurrentMaterialBeingEdited(const wstring& name)
 
 void UserInterface::CreateMaterialsEditingScreens(void)
 {
-    const Screen* lpMainScreen          = nullptr;
-    ID2D1BitmapBrush* lpBitmapBrush     = nullptr;
+    const Screen* lpMainScreen = nullptr;
+    ID2D1BitmapBrush* lpBitmapBrush = nullptr;
 
-    for_each(m_ScreensList.begin(), m_ScreensList.end(), [&] (Screen* _ptr)
+    for_each(m_ScreensList.begin(), m_ScreensList.end(), [&](Screen* _ptr)
     {
-        if(_ptr->GetScreenType() == SCREEN::MAIN_SCREEN)
+        if (_ptr->GetScreenType() == SCREEN::MAIN_SCREEN)
             lpMainScreen = _ptr;
     });
 
-    const uint BUTTON_COUNT     = std::distance(m_materials_name.begin(), m_materials_name.end()) + 1;
+    const uint BUTTON_COUNT = std::distance(m_materials_name.begin(), m_materials_name.end()) + 1;
 
     // Function's global constants
-    const float F_TRANSPARENCY_FACTOR   = 0.5f;
-    const float F_SCREEN_TRANSPARENCY   = 0.2f;
-    const float F_SCREEN_RADIUS         = 15.0f;
-    const float F_BUTTON_RADIUS         = 32.0f;
-    const float F_BUTTON_DIAMETER       = F_BUTTON_RADIUS * 2;
-    const float F_SB_LENGHT             = m_pCameraMovementSpeedSB->GetRadius()*2;
+    const float F_TRANSPARENCY_FACTOR = 0.5f;
+    const float F_SCREEN_TRANSPARENCY = 0.2f;
+    const float F_SCREEN_RADIUS = 15.0f;
+    const float F_BUTTON_RADIUS = 32.0f;
+    const float F_BUTTON_DIAMETER = F_BUTTON_RADIUS * 2;
+    const float F_SB_LENGHT = m_pCameraMovementSpeedSB->GetRadius() * 2;
 
-    const omi::Rectangle rect           = m_pMaterialsScreen->GetScreenRect();
-    const float F_WIDTH                 = m_pMaterialsScreen->GetWidth();
-    const float F_SEPARATION_FACTOR     = (F_WIDTH - (F_BUTTON_DIAMETER * BUTTON_COUNT)) / BUTTON_COUNT;// Calculate the separation factor between the buttons
-    const float F_BRUSH_SIZE            = 2.0f;
+    const omi::Rectangle rect = m_pMaterialsScreen->GetScreenRect();
+    const float F_WIDTH = m_pMaterialsScreen->GetWidth();
+    const float F_SEPARATION_FACTOR = (F_WIDTH - (F_BUTTON_DIAMETER * BUTTON_COUNT)) / BUTTON_COUNT;// Calculate the separation factor between the buttons
+    const float F_BRUSH_SIZE = 2.0f;
 
-    const D2D_COLOR_F default_color     = D2D1::ColorF(D2D1::ColorF::LightGray, 1.0f);
-    const D2D_COLOR_F hovering_color    = D2D1::ColorF(D2D1::ColorF::White,     1.0f);
-    const D2D_COLOR_F clicked_color     = D2D1::ColorF(D2D1::ColorF::LightCyan, 0.6f);
-    const D2D_COLOR_F textColor         = D2D1::ColorF(D2D1::ColorF::White,     1.0f);
+    const D2D_COLOR_F default_color = D2D1::ColorF(D2D1::ColorF::LightGray, 1.0f);
+    const D2D_COLOR_F hovering_color = D2D1::ColorF(D2D1::ColorF::White, 1.0f);
+    const D2D_COLOR_F clicked_color = D2D1::ColorF(D2D1::ColorF::LightCyan, 0.6f);
+    const D2D_COLOR_F textColor = D2D1::ColorF(D2D1::ColorF::White, 1.0f);
 
     D2D1_RECT_F screen_rect;
-    screen_rect.left                    = 15.0f;
-    screen_rect.right                   = ceil(m_RenderTargetSize.width  - 15.00f);
-    screen_rect.top                     = ceil(m_RenderTargetSize.height * 00.89f);
-    screen_rect.bottom                  = ceil(m_RenderTargetSize.height - 10.00f);
+    screen_rect.left = 15.0f;
+    screen_rect.right = ceil(m_RenderTargetSize.width - 15.00f);
+    screen_rect.top = ceil(m_RenderTargetSize.height * 00.89f);
+    screen_rect.bottom = ceil(m_RenderTargetSize.height - 10.00f);
 
-    float horizontal_separation         = 0.0f;
-    const float F_VERTICAL_SEPARATION   = GetPercentage(m_pMaterialsScreen->GetHeight(), 50) - (FONT_SIZE/2.0f);
+    float horizontal_separation = 0.0f;
+    const float F_VERTICAL_SEPARATION = GetPercentage(m_pMaterialsScreen->GetHeight(), 50) - (FONT_SIZE / 2.0f);
 
-    for(auto iter_current = m_materials_name.begin(); iter_current != m_materials_name.end(); ++iter_current)
+    for (auto iter_current = m_materials_name.begin(); iter_current != m_materials_name.end(); ++iter_current)
     {
         horizontal_separation += F_SEPARATION_FACTOR;
 
-        if(iter_current == m_materials_name.begin())    // for the first button add the diameter instead of the radius, this separates the screen better
+        if (iter_current == m_materials_name.begin())    // for the first button add the diameter instead of the radius, this separates the screen better
             horizontal_separation += F_BUTTON_DIAMETER;
         else
             horizontal_separation += F_BUTTON_RADIUS;   // for the rest we can just add the radius of the button
@@ -1428,7 +1428,7 @@ void UserInterface::CreateMaterialsEditingScreens(void)
         const Material& pMaterial = m_pIView->VGetMaterialProperties(*iter_current);    // Get this material details
 
         // For each material
-        RoundButton* lpRoundButtonUniqueMaterial  = new RoundButton();        
+        RoundButton* lpRoundButtonUniqueMaterial = new RoundButton();
 
         lpRoundButtonUniqueMaterial->Initialize(float2(screen_rect.left + horizontal_separation, screen_rect.top + F_VERTICAL_SEPARATION), F_BUTTON_RADIUS, UIBUTTON::MATERIAL_EDIT_BUTTON, *iter_current, textColor);
 
@@ -1439,7 +1439,7 @@ void UserInterface::CreateMaterialsEditingScreens(void)
         // Effects of the material button
         lpRoundButtonUniqueMaterial->SetOutlineBrushSize(F_BRUSH_SIZE);
         lpRoundButtonUniqueMaterial->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-        lpRoundButtonUniqueMaterial->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+        lpRoundButtonUniqueMaterial->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
         lpRoundButtonUniqueMaterial->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
         // Add the material's button to the main material-editing screen
@@ -1447,11 +1447,11 @@ void UserInterface::CreateMaterialsEditingScreens(void)
 
         // Current material Screen        
         Screen* pUniqueMaterialScreen = new Screen();
-        pUniqueMaterialScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom , F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MATERIALS_TERM_SCREEN);
+        pUniqueMaterialScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom, F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MATERIALS_TERM_SCREEN);
         pUniqueMaterialScreen->SetParent(m_pMaterialsScreen);
 
-        const float lseparation_factor  = (pUniqueMaterialScreen->GetWidth() - (F_BUTTON_DIAMETER * 5))/5;
-        float l_horizontal_separation   = lseparation_factor + F_BUTTON_RADIUS;
+        const float lseparation_factor = (pUniqueMaterialScreen->GetWidth() - (F_BUTTON_DIAMETER * 5)) / 5;
+        float l_horizontal_separation = lseparation_factor + F_BUTTON_RADIUS;
 
         /* Each material will have 3 buttons and 1 scroll bar for each material term (Ambien, Diffuse, Specular) and for the alpaha channel respectively */
         {
@@ -1468,11 +1468,11 @@ void UserInterface::CreateMaterialsEditingScreens(void)
                 // Effects
                 lpAmbientButton->SetOutlineBrushSize(F_BRUSH_SIZE);
                 lpAmbientButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                lpAmbientButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                lpAmbientButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                 lpAmbientButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
-                const uint SB_COUNT = 4;                
-                const float SEPARATION_SB = (pUniqueMaterialScreen->GetWidth() - (F_SB_LENGHT * SB_COUNT))/SB_COUNT;
+                const uint SB_COUNT = 4;
+                const float SEPARATION_SB = (pUniqueMaterialScreen->GetWidth() - (F_SB_LENGHT * SB_COUNT)) / SB_COUNT;
 
                 float h_separation = SEPARATION_SB * 2;
 
@@ -1482,14 +1482,14 @@ void UserInterface::CreateMaterialsEditingScreens(void)
                 // AMBIENT TERM SCREEN - CONSISTS OF 3 COLOR CHANNELS: RED, GREEN, BLUE (RGB)
 
                 Screen* lpMaterialChannelScreen = new Screen();
-                lpMaterialChannelScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom , F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MATERIAL_CHANNEL_SCREEN);
+                lpMaterialChannelScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom, F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MATERIAL_CHANNEL_SCREEN);
                 lpMaterialChannelScreen->SetParent(pUniqueMaterialScreen);
                 {
                     // Red channel
                     {
                         ScrollBar* lpRedChannelSB = new ScrollBar();
                         const int RED_CHANNEL_VALUE = static_cast<int>(pMaterial.Ambient.x * 100.0);
-                        lpRedChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::RED_CHANNEL, wstring(L"Red Color"), RED_CHANNEL_VALUE,    0);
+                        lpRedChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::RED_CHANNEL, wstring(L"Red Color"), RED_CHANNEL_VALUE, 0);
 
                         lpMaterialChannelScreen->AddUIElement(lpRedChannelSB);
                     }
@@ -1509,7 +1509,7 @@ void UserInterface::CreateMaterialsEditingScreens(void)
                     {
                         ScrollBar* lpBlueChannelSB = new ScrollBar();
                         const int BLUE_CHANNEL_VALUE = static_cast<int>(pMaterial.Ambient.z * 100.0);
-                        lpBlueChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::BLUE_CHANNEL, wstring(L"Blue Color"), BLUE_CHANNEL_VALUE,  0);
+                        lpBlueChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::BLUE_CHANNEL, wstring(L"Blue Color"), BLUE_CHANNEL_VALUE, 0);
 
                         lpMaterialChannelScreen->AddUIElement(lpBlueChannelSB);
                     }
@@ -1536,11 +1536,11 @@ void UserInterface::CreateMaterialsEditingScreens(void)
                 // Effects
                 lpDiffuseButton->SetOutlineBrushSize(F_BRUSH_SIZE);
                 lpDiffuseButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                lpDiffuseButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                lpDiffuseButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                 lpDiffuseButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
-                const uint SB_COUNT = 4;                
-                const float SEPARATION_SB = (pUniqueMaterialScreen->GetWidth() - (F_SB_LENGHT * SB_COUNT))/SB_COUNT;
+                const uint SB_COUNT = 4;
+                const float SEPARATION_SB = (pUniqueMaterialScreen->GetWidth() - (F_SB_LENGHT * SB_COUNT)) / SB_COUNT;
 
                 float h_separation = SEPARATION_SB * 2;
 
@@ -1550,14 +1550,14 @@ void UserInterface::CreateMaterialsEditingScreens(void)
                 // AMBIENT TERM SCREEN - CONSISTS OF 3 COLOR CHANNELS: RED, GREEN, BLUE (RGB)
 
                 Screen* lpMaterialChannelScreen = new Screen();
-                lpMaterialChannelScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom , F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MATERIAL_CHANNEL_SCREEN);
+                lpMaterialChannelScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom, F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MATERIAL_CHANNEL_SCREEN);
                 lpMaterialChannelScreen->SetParent(pUniqueMaterialScreen);
                 {
                     // Red channel
                     {
                         ScrollBar* lpRedChannelSB = new ScrollBar();
                         const int RED_CHANNEL_VALUE = static_cast<int>(pMaterial.Diffuse.x * 100.0);
-                        lpRedChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::RED_CHANNEL, wstring(L"Red Color"), RED_CHANNEL_VALUE,    0);
+                        lpRedChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::RED_CHANNEL, wstring(L"Red Color"), RED_CHANNEL_VALUE, 0);
 
                         lpMaterialChannelScreen->AddUIElement(lpRedChannelSB);
                     }
@@ -1577,7 +1577,7 @@ void UserInterface::CreateMaterialsEditingScreens(void)
                     {
                         ScrollBar* lpBlueChannelSB = new ScrollBar();
                         const int BLUE_CHANNEL_VALUE = static_cast<int>(pMaterial.Diffuse.z * 100.0);
-                        lpBlueChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::BLUE_CHANNEL, wstring(L"Blue Color"), BLUE_CHANNEL_VALUE,  0);
+                        lpBlueChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::BLUE_CHANNEL, wstring(L"Blue Color"), BLUE_CHANNEL_VALUE, 0);
 
                         lpMaterialChannelScreen->AddUIElement(lpBlueChannelSB);
                     }
@@ -1604,11 +1604,11 @@ void UserInterface::CreateMaterialsEditingScreens(void)
                 // Effects
                 lpSpecularButton->SetOutlineBrushSize(F_BRUSH_SIZE);
                 lpSpecularButton->SetDefaultEffect(DEFAULT_EFFECT::DRAWOUTLINE_D, default_color);
-                lpSpecularButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color );
+                lpSpecularButton->SetHoveringEffect(HOVERING_EFFECT::DRAWOUTLINE_H, hovering_color);
                 lpSpecularButton->SetClickedEffect(CLICKED_EFFECT::DRAWMASK_C, clicked_color);
 
-                const uint SB_COUNT = 4;                
-                const float SEPARATION_SB = (pUniqueMaterialScreen->GetWidth() - (F_SB_LENGHT * SB_COUNT))/SB_COUNT;
+                const uint SB_COUNT = 4;
+                const float SEPARATION_SB = (pUniqueMaterialScreen->GetWidth() - (F_SB_LENGHT * SB_COUNT)) / SB_COUNT;
 
                 float h_separation = SEPARATION_SB;
 
@@ -1618,7 +1618,7 @@ void UserInterface::CreateMaterialsEditingScreens(void)
                 // AMBIENT TERM SCREEN - CONSISTS OF 3 COLOR CHANNELS: RED, GREEN, BLUE (RGB)
 
                 Screen* lpMaterialChannelScreen = new Screen();
-                lpMaterialChannelScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom , F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MATERIAL_CHANNEL_SCREEN);
+                lpMaterialChannelScreen->InitializeScreen(screen_rect.left, screen_rect.right, screen_rect.top, screen_rect.bottom, F_SCREEN_TRANSPARENCY, F_SCREEN_RADIUS, SCREEN::MATERIAL_CHANNEL_SCREEN);
                 lpMaterialChannelScreen->SetParent(pUniqueMaterialScreen);
                 {
                     // Red channel
@@ -1635,7 +1635,7 @@ void UserInterface::CreateMaterialsEditingScreens(void)
                     {
                         ScrollBar* lpGreenChannelSB = new ScrollBar();
                         const int GREEN_CHANNEL_VALUE = static_cast<int>(pMaterial.Specular.y * 100.0);
-                        lpGreenChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::GREEN_CHANNEL, wstring(L"Green Color"), GREEN_CHANNEL_VALUE,0);
+                        lpGreenChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::GREEN_CHANNEL, wstring(L"Green Color"), GREEN_CHANNEL_VALUE, 0);
 
                         lpMaterialChannelScreen->AddUIElement(lpGreenChannelSB);
                     }
@@ -1654,7 +1654,7 @@ void UserInterface::CreateMaterialsEditingScreens(void)
                     h_separation += SEPARATION_SB + F_SB_LENGHT;
                     {
                         ScrollBar* lpBlueChannelSB = new ScrollBar();
-                        const int SPEC_FACTOR_VALUE = static_cast<int>(pMaterial.Specular.w/4);
+                        const int SPEC_FACTOR_VALUE = static_cast<int>(pMaterial.Specular.w / 4);
                         lpBlueChannelSB->Initialize(screen_rect.left + h_separation, screen_rect.top + F_VERTICAL_SEPARATION - 5.0f, UIBUTTON::SPECULAR_FACTOR, wstring(L"Spec Factor"), SPEC_FACTOR_VALUE, 0, L"*4");
 
                         lpMaterialChannelScreen->AddUIElement(lpBlueChannelSB);
@@ -1693,18 +1693,18 @@ void UserInterface::SaveUserSettingsToFile(void)
 {
     PWSTR szUserAppLocal_path;
     HRESULT hr = SHGetKnownFolderPath(FOLDERID_LocalAppData, KF_FLAG_CREATE, nullptr, &szUserAppLocal_path);
-    if(SUCCEEDED(hr))
+    if (SUCCEEDED(hr))
     {
         wstring wzFile = szUserAppLocal_path;
         wzFile += wsSETTINGS_FILENAME;
 
-        FILE* file  = nullptr;
-        unsigned short  value   = 0;
+        FILE* file = nullptr;
+        unsigned short  value = 0;
 
         // Open the file
         _wfopen_s(&file, wzFile.c_str(), L"wb");
         assert(file);
-        if(file)
+        if (file)
         {
             // Write camera movement speed
             SETTING_TOKEN token = SETTING_TOKEN::CAMERAMOVEMENTSPEED_SETTING;
@@ -1715,8 +1715,8 @@ void UserInterface::SaveUserSettingsToFile(void)
             // Write camera zoom speed
             token = SETTING_TOKEN::CAMERAZOOMSPEED_SETTING;
             value = static_cast<unsigned short>(GetCameraZoomSpeed());
-            fwrite(&token, sizeof(uint),    1, file);
-            fwrite(&value, sizeof(short),   1, file);
+            fwrite(&token, sizeof(uint), 1, file);
+            fwrite(&value, sizeof(short), 1, file);
         }
         CoTaskMemFree(szUserAppLocal_path);
     }
@@ -1727,9 +1727,9 @@ void UserInterface::EditMaterialChannel(const IUIElement* _PSBChannel, UIBUTTON 
     assert(m_materials_name.empty() == false);
 
     assert(
-        (m_MaterialTermBeingEdited == UIBUTTON::DIFFUSE_TERM) || 
-        (m_MaterialTermBeingEdited == UIBUTTON::AMBIENT_TERM) || 
-        (m_MaterialTermBeingEdited == UIBUTTON::SPECULAR_TERM) || 
+        (m_MaterialTermBeingEdited == UIBUTTON::DIFFUSE_TERM) ||
+        (m_MaterialTermBeingEdited == UIBUTTON::AMBIENT_TERM) ||
+        (m_MaterialTermBeingEdited == UIBUTTON::SPECULAR_TERM) ||
         (_channel == ALPHA_CHANNEL)
         );
 
@@ -1737,7 +1737,7 @@ void UserInterface::EditMaterialChannel(const IUIElement* _PSBChannel, UIBUTTON 
 
     // Only get a float4 pointer if it's not the alpha channel deing edited
     float4* ptrColor = nullptr;
-    if(_channel != UIBUTTON::ALPHA_CHANNEL)
+    if (_channel != UIBUTTON::ALPHA_CHANNEL)
     {
         switch (m_MaterialTermBeingEdited)
         {
@@ -1771,13 +1771,13 @@ void UserInterface::EditMaterialChannel(const IUIElement* _PSBChannel, UIBUTTON 
         break;
     case UIBUTTON::BLUE_CHANNEL:
         ptrColorChannel = &(ptrColor->z);
-        break;    
+        break;
     }
 
     const ScrollBar* ptr = reinterpret_cast<const ScrollBar*>(_PSBChannel);
-    const int current_value  = ptr->GetCurrentValue();
-    if(_channel == UIBUTTON::SPECULAR_FACTOR)    
-        *ptrColorChannel = static_cast<float>((4 * current_value));
-    else    
+    const int current_value = ptr->GetCurrentValue();
+    if (_channel == UIBUTTON::SPECULAR_FACTOR)
+        *ptrColorChannel = static_cast<float>((4 * current_value));// why is there a 4 here??
+    else
         *ptrColorChannel = static_cast<float>(current_value / 100.0f);
 }

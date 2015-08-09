@@ -16,15 +16,15 @@
 static const wchar_t* wsSETTINGS_FILENAME = L"\\3DMiveSettings.config";
 const float UI_STATS_FONT_SIZE = 14.0f;
 using namespace omi;
-enum SETTING_TOKEN { CAMERAMOVEMENTSPEED_SETTING = 0x11111111, CAMERAZOOMSPEED_SETTING};
+enum SETTING_TOKEN { CAMERAMOVEMENTSPEED_SETTING = 0x11111111, CAMERAZOOMSPEED_SETTING };
 typedef forward_list<Screen*> ScreensList;
 
 class UserInterface
 {
     // These are used to quickly access certain UI buttons that need to be called directly, i.e. Scroll-Bars
     IUIElement* m_pCameraMovementSpeedSB;
-    IUIElement* m_pCameraZoomSpeedSB;   
-    
+    IUIElement* m_pCameraZoomSpeedSB;
+
     ID2D1Factory1*          m_pD2DFactory;
     ID2D1Device*            m_pD2DDevice;
     ID2D1DeviceContext*     m_pD2DContext;
@@ -33,7 +33,7 @@ class UserInterface
     ComPtr<ID2D1SolidColorBrush> m_pTextBrushRed;
     IDWriteTextFormat*      m_pTextFormat;
     IDWriteFactory1*        m_pDWriteFactory;
-    
+
     ComPtr<IDWriteTextLayout> m_pTextLayoutFPS;
     ComPtr<IDWriteTextLayout> m_pTextLayoutPotentialFPS;
     ComPtr<IDWriteTextLayout> m_pTextLayoutCorrdinateSystem;
@@ -43,7 +43,7 @@ class UserInterface
     ComPtr<IDWriteTextLayout> m_pTextLayoutMeshHeight;
 
     IWICImagingFactory*  m_pWicImagingFactory;
- 
+
     forward_list<IOMesh*> m_Importers;
     forward_list<wstring> m_materials_name;
 
@@ -53,34 +53,32 @@ class UserInterface
     IUIElement* m_pBackArrow;
     ScreensList m_ScreensList;
     ScreensList m_MaterialScreenList;
-    
+
     D2D1_SIZE_F         m_RenderTargetSize;
-    
+
     wstring m_ImportFilename;
     wstring m_ExportFilename;
     IView*  m_pIView;
-    HWND    m_hwnd;    
+    HWND    m_hwnd;
 
     IFileDialog* m_dlg_OpenFile;
     IFileDialog* m_dlg_SaveFile;
-    
+
     // Timer
     int     m_iPotentialFPS;
     int     m_iCurrentFPS;
-    int     m_frameCount;  
-    
+    int     m_frameCount;
+
     // DPI
     float   m_dpiX;
-    float   m_dpiY;    
+    float   m_dpiY;
 
     bool    m_bMouseIsCaptured;
-
     int     m_iWidth, m_iHeight;
     bool    m_bVisible;
 
     // Camera movement
     int     m_iCameraMovementSpeed, m_iCameraZoomSpeed;
-    
     uint    m_iTriangleCount;
 
     Material*   m_MaterialBeingEdited;
@@ -89,12 +87,12 @@ class UserInterface
 public:
     UserInterface(void);
     ~UserInterface(void);
-    
+
     // Potential FPS is how many frames per second could be rendered if the application wasn't 
     // limiting the FPS to approximately 60 fps
     void SetPotentialFPS(int potentialFPS);
     void SetCurrentFPS(int fps);
-    
+
     // Initializes the device and context: ID2DDevice & ID2DContext
     bool InitD2DDevices(IView* pview, IDXGIDevice2* d3dDevice);
 
@@ -118,17 +116,17 @@ public:
     // This function is called for when the Windows' window is being created the DPI of the screen 
     // can be properly used to size the window
     float2 GetDPI(void);
-    
+
     void SetCurrentScreen(Screen& pScreen);
     void SetTraingleCount(uint count);
     //
     void MouseHoveringAt(int x, int y);
     UIBUTTON MouseClickAt(int x, int y);
     UIBUTTON MouseButtonUp(int x, int y);
-    
+
     int GetCameraSpeedValue(void);
     int GetCameraZoomSpeed(void);
-    
+
     bool IsFlipable(void) const { return m_Importers.front()->isMeshFlipable(); }
     void SetMeshAABB(const AABB& _aabb);
 private:
@@ -141,7 +139,7 @@ private:
     // Saves the settings the current settings for the user so they will be available
     // next time the application is used under the same machine
     void SaveUserSettingsToFile(void);
-    
+
     // Get rid of the current Mesh
     void EmptyMeshList(void);
 
@@ -151,7 +149,7 @@ private:
     // Gets the file name of the file to import. This prompts the user with a OpenFile 
     // dialog so the user can find the file and select a supported file from a list
     void GetInputFileName(void);
-    
+
     // Gets the file name of the file to export the mesh to. This prompts the user with a SaveFile 
     // dialog so the user can find the file and select a supported file from a list 
     void GetOutputFileName(void);
@@ -164,5 +162,5 @@ private:
     UserInterface(const UserInterface& UI) : m_MaterialBeingEdited(nullptr){ }
 
     void CreateMainScreen(void);
-    void CreateContexMenu(void);    
+    void CreateContexMenu(void);
 };
