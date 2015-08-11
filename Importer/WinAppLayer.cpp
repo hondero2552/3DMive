@@ -104,9 +104,7 @@ int WinAppLayer::MessageLoop(void)
             DispatchMessage(&msg);
         }
         else if (!m_bOnPause)
-        {
-            GameLoop();
-        }
+			GameLoop();       
         else
             Sleep(100);
     }
@@ -330,7 +328,6 @@ LRESULT WinAppLayer::WinProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
         const int last_x = GET_X_LPARAM(lParam);
         const int last_y = GET_Y_LPARAM(lParam);
         View* pView = reinterpret_cast<View*>(m_pIView);
-        const float2 dpi = pView->GetDPI();
         // Moving the Camera
         if ((wParam & MK_LBUTTON) && mouseClickedUIButton == false)
         {

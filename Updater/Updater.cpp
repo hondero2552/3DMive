@@ -7,7 +7,7 @@
 #include <iostream>
 #include <time.h>
 #include <WinInet.h>
-#include <Shlobj.h>
+#include <ShlObj.h>
 
 using std::string;
 using std::wstring;
@@ -196,26 +196,26 @@ int _tmain(int argc, _TCHAR* argv[])
                 }
                 else
                 {
-                    wprintf_s(L"%\n", L"The update file could not be downloaded.");
+                    wprintf_s(L"%s", L"The update file could not be downloaded.\n");
                     Wait(2);
                 }
                 wprintf_s(L"%s", L"Closing connection to the server...");
                 InternetCloseHandle(hOpenURL);
-                wprintf_s(L"%s\n", L" conection closed successfully.");
+                wprintf_s(L"%s", L" conection closed successfully.\n");
             }
             else
             {
-                wprintf_s(L"%s\n", L"Request failed. The information requested from the server wasn't found.");
+                wprintf_s(L"%s", L"Request failed. The information requested from the server wasn't found.\n");
                 Wait(2);
             }
 
             wprintf_s(L"%s", L"Closing internet session... ");
             InternetCloseHandle(hOpenConnection);
-            wprintf_s(L"%s\n", L"Session closed.");
+            wprintf_s(L"%s", L"Session closed.\n");
         }
         else
         {
-            wprintf_s(L"%s\n", "Request failed. Internet session was not allowed by Windows.");
+            wprintf_s(L"%s", L"Request failed. Internet session was not allowed by Windows.\n");
             Wait(2);
         }
     }

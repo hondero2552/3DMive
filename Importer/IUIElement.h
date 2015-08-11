@@ -38,7 +38,6 @@ public:
     virtual Screen* GetChildScreen(void) = 0;
     virtual void SetChildScreen(Screen* pScreen) = 0;
 
-    virtual D2D1_MATRIX_3X2_F& GetTransform(void) = 0;
     virtual void RePositionElement(D2D1_POINT_2F& newTopLeft) = 0;
 protected:    
     static ID2D1DeviceContext* m_pContext;

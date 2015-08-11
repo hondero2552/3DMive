@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -39,57 +39,58 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Importer</RootNamespace>
     <ProjectName>3DMive</ProjectName>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Windows 7 Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Windows 7 Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Windows 7 Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Windows 7 Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -123,44 +124,44 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Projects\DirectXTex;E:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Projects\DirectXTex\Bin\Desktop_2013\Win32\Debug;E:\Projects\DirectXTK\Bin\Desktop_2013\Win32\Debug;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x86\debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\Projects\DirectXTex;$(IncludePath);$(SolutionDir)DirectXTK\Inc\;$(SolutionDir)DirectXTK\Inc;$(SolutionDir)DirectXTex\DirectXTex\</IncludePath>
+    <LibraryPath>$(SolutionDir)DirectXTex\DirectXTex\Bin\Desktop_2015\Win32\Debug\;$(SolutionDir)DirectXTK\Bin\Desktop_2015_Win10\Win32\Debug\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Windows 7 Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Projects\DirectXTex\DirectXTex;E:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Projects\DirectXTex\DirectXTex;E:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath);$(SolutionDir)External Tools\Include\;$(SolutionDir)DirectXTK\Inc;$(SolutionDir)DirectXTex\DirectXTex\</IncludePath>
     <LibraryPath>E:\Projects\DirectXTex\DirectXTex\Bin\Desktop_2012\Win32\Debug;E:\Projects\DirectXTK\Bin\Desktop_2012\Win32\Debug;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x86\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>F:\Projects\DirectXTex\DirectXTex;F:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>F:\Projects\DirectXTex\DirectXTex;F:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath);$(SolutionDir)External Tools\Include\</IncludePath>
     <LibraryPath>F:\Projects\DirectXTex\DirectXTex\Bin\Desktop_2012\x64\Debug;F:\Projects\DirectXTK\Bin\Desktop_2012\x64\Debug;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x64\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Windows 7 Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>F:\Projects\DirectXTex\DirectXTex;F:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>F:\Projects\DirectXTex\DirectXTex;F:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath);$(SolutionDir)External Tools\Include\</IncludePath>
     <LibraryPath>F:\Projects\DirectXTex\DirectXTex\Bin\Desktop_2012\x64\Debug;F:\Projects\DirectXTK\Bin\Desktop_2012\x64\Debug;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x64\debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>E:\Projects\DirectXTex;E:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Projects\DirectXTex\Bin\Desktop_2013\Win32\Release;E:\Projects\DirectXTK\Bin\Desktop_2013\Win32\Release;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x86\release;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath);$(SolutionDir)External Tools\Include\;$(SolutionDir)DirectXTK\Inc;$(SolutionDir)DirectXTex\DirectXTex\</IncludePath>
+    <LibraryPath>$(SolutionDir)DirectXTK\Bin\Desktop_2015_Win10\Win32\Release\;$(SolutionDir)DirectXTex\DirectXTex\Bin\Desktop_2015\Win32\Release\;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Windows 7 Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>E:\Projects\DirectXTex\DirectXTex;E:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>E:\Projects\DirectXTex\DirectXTex;E:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath);$(SolutionDir)External Tools\Include\;$(SolutionDir)DirectXTK\Inc;$(SolutionDir)DirectXTex\DirectXTex\</IncludePath>
     <LibraryPath>E:\Projects\DirectXTex\DirectXTex\Bin\Desktop_2012\Win32\Release;E:\Projects\DirectXTK\Bin\Desktop_2012\Win32\Release;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x86\release;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>F:\Projects\DirectXTex\DirectXTex;F:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>F:\Projects\DirectXTex\DirectXTex;F:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath);$(SolutionDir)External Tools\Include\</IncludePath>
     <LibraryPath>F:\Projects\DirectXTex\DirectXTex\Bin\Desktop_2012\x64\Release;F:\Projects\DirectXTK\Bin\Desktop_2012\x64\Release;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x64\release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Windows 7 Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>F:\Projects\DirectXTex\DirectXTex;F:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>F:\Projects\DirectXTex\DirectXTex;F:\Projects\DirectXTK\Inc;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\include;$(IncludePath);$(SolutionDir)External Tools\Include\</IncludePath>
     <LibraryPath>F:\Projects\DirectXTex\DirectXTex\Bin\Desktop_2012\x64\Release;F:\Projects\DirectXTK\Bin\Desktop_2012\x64\Release;C:\Program Files\Autodesk\FBX\FBX SDK\2014.1\lib\vs2012\x64\release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
